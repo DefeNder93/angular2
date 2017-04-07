@@ -6,6 +6,7 @@ import { HttpModule } from '@angular/http';
 import { AppComponent } from './app.component';
 import {AppRoutingModule} from "./routing.module";
 import {TestComponent} from "./test/test.component";
+import {PasswordModule} from 'primeng/primeng';
 
 @NgModule({
   declarations: [
@@ -16,7 +17,8 @@ import {TestComponent} from "./test/test.component";
     BrowserModule,
     FormsModule,
     HttpModule,
-    AppRoutingModule
+    AppRoutingModule,
+    PasswordModule
   ],
   providers: [],
   bootstrap: [AppComponent]
