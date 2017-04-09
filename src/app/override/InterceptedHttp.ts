@@ -37,7 +37,7 @@ export class InterceptedHttp extends Http {
       options.headers = new Headers();
     }
     //options.headers.append('Content-Type', 'application/json');
-    options.headers.append('test', '111');
+    //options.headers.append('test', '111');
 
     return options;
   }
