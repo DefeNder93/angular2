@@ -4,6 +4,8 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var user = require('./controllers/user');
+var auth = require('./controllers/auth');
+var passport = require('passport');
 
 var app = express();
 
@@ -11,8 +13,17 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
+app.use(passport.initialize());
+passport.serializeUser(function(user, done) {
+  done(null, user);
+});
+
+passport.deserializeUser(function(user, done) {
+  done(null, user);
+});
 
 app.use('/user', user);
+app.use('/auth', auth);
 
 app.listen(3000, function () {
   console.log('App listening on port 3000!')
