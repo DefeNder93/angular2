@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import {HttpModule, Http, XHRBackend, RequestOptions} from '@angular/http';
 
-import { AppComponent } from './app.component';
+import { AppComponent } from "./app.component";
 import {AppRoutingModule} from "./routing.module";
 import {TestComponent} from "./test/test.component";
 import {PasswordModule} from 'primeng/primeng';
@@ -11,6 +11,8 @@ import {httpFactory} from "./override/httpFactory";
 import {HeaderComponent} from "./header/header.component";
 import {TaskComponent} from "./tasks/task/task.component";
 import {CombineTask} from "./tasks/task/types/combineTask/CombineTask";
+import {DynamicTask} from "./tasks/task/dynamicTask.directive";
+import {InsertTask} from "./tasks/task/types/insertTask/InsertTask";
 
 @NgModule({
   declarations: [
@@ -18,7 +20,9 @@ import {CombineTask} from "./tasks/task/types/combineTask/CombineTask";
     TestComponent,
     HeaderComponent,
     TaskComponent,
-    CombineTask
+    CombineTask,
+    InsertTask,
+    DynamicTask
   ],
   imports: [
     BrowserModule,
@@ -27,6 +31,7 @@ import {CombineTask} from "./tasks/task/types/combineTask/CombineTask";
     AppRoutingModule,
     PasswordModule
   ],
+  entryComponents: [ CombineTask, InsertTask ],
   providers: [
     {
       provide: Http,
