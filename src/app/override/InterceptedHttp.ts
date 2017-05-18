@@ -1,8 +1,7 @@
-import {Injectable} from "@angular/core";
 import { ConnectionBackend, RequestOptions, Request, RequestOptionsArgs, Response, Http, Headers} from "@angular/http";
 import {Observable} from "rxjs/Rx";
+import {LocalStorage} from "../common/LocalStorage.service";
 
-@Injectable()
 export class InterceptedHttp extends Http {
   constructor(backend: ConnectionBackend, defaultOptions: RequestOptions) {
     super(backend, defaultOptions);
@@ -28,7 +27,6 @@ export class InterceptedHttp extends Http {
     return super.delete(url, this.getRequestOptionArgs(options));
   }
 
-
   private getRequestOptionArgs(options?: RequestOptionsArgs) : RequestOptionsArgs {
     if (options == null) {
       options = new RequestOptions();
@@ -36,8 +34,11 @@ export class InterceptedHttp extends Http {
     if (options.headers == null) {
       options.headers = new Headers();
     }
-    //options.headers.append('Content-Type', 'application/json');
-    //options.headers.append('test', '111');
+
+    var token = LocalStorage.get('token');
+    if (token) {
+      options.headers.append('Auth', token);
+    }
 
     return options;
   }

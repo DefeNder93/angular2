@@ -13,9 +13,11 @@ import {TaskComponent} from "./tasks/task/task.component";
 import {CombineTask} from "./tasks/task/types/combineTask/CombineTask";
 import {DynamicTask} from "./tasks/task/dynamicTask.directive";
 import {InsertTask} from "./tasks/task/types/insertTask/InsertTask";
+import {LoginComponent} from "./login/login.component";
 
 @NgModule({
   declarations: [
+    LoginComponent,
     AppComponent,
     TestComponent,
     HeaderComponent,
