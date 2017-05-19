@@ -18,5 +18,8 @@
     "passport-google-oauth": "^1.0.0",
     "jsonwebtoken": "^5.5.4",
     "request": "^2.67.0"
+  },
+  "devDependencies": {
+    "@angular/cli": "^1.0.4"
   }
 }
