@@ -6,7 +6,7 @@ import {HttpModule, Http, XHRBackend, RequestOptions} from '@angular/http';
 import { AppComponent } from "./app.component";
 import {AppRoutingModule} from "./routing.module";
 import {TestComponent} from "./test/test.component";
-import {PasswordModule} from 'primeng/primeng';
+import {MenubarModule} from 'primeng/primeng';
 import {httpFactory} from "./override/httpFactory";
 import {HeaderComponent} from "./header/header.component";
 import {LoginComponent} from "./login/login.component";
@@ -24,8 +24,8 @@ import {TaskModule} from "./tasks/task/task.module";
     FormsModule,
     HttpModule,
     AppRoutingModule,
-    PasswordModule,
-    TaskModule
+    TaskModule,
+    MenubarModule
   ],
   providers: [
     {
