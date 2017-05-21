@@ -9,11 +9,8 @@ import {TestComponent} from "./test/test.component";
 import {PasswordModule} from 'primeng/primeng';
 import {httpFactory} from "./override/httpFactory";
 import {HeaderComponent} from "./header/header.component";
-import {TaskComponent} from "./tasks/task/task.component";
-import {CombineTask} from "./tasks/task/types/combineTask/CombineTask";
-import {DynamicTask} from "./tasks/task/dynamicTask.directive";
-import {InsertTask} from "./tasks/task/types/insertTask/InsertTask";
 import {LoginComponent} from "./login/login.component";
+import {TaskModule} from "./tasks/task/task.module";
 
 @NgModule({
   declarations: [
@@ -21,19 +18,15 @@ import {LoginComponent} from "./login/login.component";
     AppComponent,
     TestComponent,
     HeaderComponent,
-    TaskComponent,
-    CombineTask,
-    InsertTask,
-    DynamicTask
   ],
   imports: [
     BrowserModule,
     FormsModule,
     HttpModule,
     AppRoutingModule,
-    PasswordModule
+    PasswordModule,
+    TaskModule
   ],
-  entryComponents: [ CombineTask, InsertTask ],
   providers: [
     {
       provide: Http,
