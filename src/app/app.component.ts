@@ -1,12 +1,13 @@
 import { Component } from '@angular/core';
 import {Http} from "@angular/http";
 import {Auth} from "./common/auth/Auth.service";
+import {Config} from "./common/Config.service";
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['app.component.scss'],
-  providers: [Auth]
+  providers: [Auth, Config]
 })
 export class AppComponent {
   constructor(private http: Http, private auth: Auth) {

@@ -45,6 +45,9 @@ var providers = {
   },
   google: {
     url: 'https://www.googleapis.com/oauth2/v3/tokeninfo'
+  },
+  github: {
+    url: 'https://api.github.com/user'
   }
 };
 

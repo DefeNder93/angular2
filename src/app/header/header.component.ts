@@ -21,7 +21,6 @@ export class HeaderComponent implements OnInit {
       },
       {
         label: 'Task',
-        icon: 'task/1',
         routerLink: ['/task/1']
       }
     ];
