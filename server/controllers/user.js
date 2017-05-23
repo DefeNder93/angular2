@@ -1,8 +1,10 @@
-var express = require('express');
-var connection = require('../db/connection');
-var router = express.Router();
+"use strict";
 
-var db;
+let express = require('express');
+let connection = require('../db/connection');
+let router = express.Router();
+
+let db;
 connection.then(function(connectedDb){
   db = connectedDb;
 });

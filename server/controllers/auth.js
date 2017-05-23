@@ -1,15 +1,17 @@
-var express = require('express');
-var connection = require('../db/connection');
-var router = express.Router();
-var jwt = require('jsonwebtoken');
-var request = require('request');
+"use strict";
 
-var db;
+let express = require('express');
+let connection = require('../db/connection');
+let router = express.Router();
+let jwt = require('jsonwebtoken');
+let request = require('request');
+
+let db;
 connection.then(function(connectedDb){
   db = connectedDb;
 });
 
-var providers = {
+let providers = {
   facebook: {
     url: process.env.FACEBOOK_URL || 'https://graph.facebook.com/me'
   },
@@ -22,7 +24,6 @@ var providers = {
 };
 
 function validateWithProvider(network, socialToken) {
-  console.log('validateWithProvider');
   return new Promise(function (resolve, reject) {
     // Send a GET request to Facebook with the token as query string
     request({
@@ -31,8 +32,6 @@ function validateWithProvider(network, socialToken) {
       },
       function (error, response, body) {
         if (!error && response.statusCode == 200) {
-          console.log('resolve');
-          console.log(response);
           resolve(JSON.parse(body));
         } else {
           console.log('error');
@@ -45,8 +44,8 @@ function validateWithProvider(network, socialToken) {
 }
 
 router.post('/social', function (req, res) {
-  var network = req.body.network;
-  var socialToken = req.body.socialToken;
+  let network = req.body.network;
+  let socialToken = req.body.socialToken;
   validateWithProvider(network, socialToken).then(function (profile) {
     // Returns a server signed JWT
     res.send(createJwt(profile));
@@ -55,12 +54,13 @@ router.post('/social', function (req, res) {
   });
 });
 
+// just for test
 router.get('/secured', function (req, res) {
-  var jwtString = req.headers.auth;
+  let jwtString = req.headers.auth;
   console.log('jwtString');
   console.log(req.headers);
   try {
-    var profile = verifyJwt(jwtString);
+    let profile = verifyJwt(jwtString);
     res.send('You are good people: ' + profile.id);
   } catch (err) {
     res.send('Hey, you are not supposed to be here');

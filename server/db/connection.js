@@ -1,7 +1,9 @@
-var MongoClient = require('mongodb').MongoClient;
-var Promise = require('promise');
+"use strict";
 
-var connectPromise = new Promise(function(resolve, reject) {
+let MongoClient = require('mongodb').MongoClient;
+let Promise = require('promise');
+
+let connectPromise = new Promise(function(resolve, reject) {
   MongoClient.connect('mongodb://' + process.env.DB_HOST + ':' + process.env.DB_PORT + '/' + process.env.DB_NAME, function (err, db) {
     if (err) throw err;
     resolve(db);
