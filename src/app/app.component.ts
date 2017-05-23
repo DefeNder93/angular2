@@ -3,12 +3,13 @@ import {Http} from "@angular/http";
 import {Auth} from "./common/auth/Auth.service";
 import {Config} from "./common/Config.service";
 import {LocalStorage} from "./common/LocalStorage.service";
+import {Api} from "./common/Api.service";
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['app.component.scss'],
-  providers: [Auth, Config, LocalStorage]
+  providers: [Api, Auth, Config, LocalStorage]
 })
 export class AppComponent {
   constructor(private http: Http, private auth: Auth) {

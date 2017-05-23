@@ -1,6 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
 import {Auth} from "../common/auth/Auth.service";
-import {Config} from "../common/Config.service";
 
 @Component({
   selector: 'app-login',
@@ -14,21 +13,32 @@ import {Config} from "../common/Config.service";
       </p>
     </div>
     <div *ngIf="isLoggedIn()" class="login-form">
-      You are logged in with ... . You can <button (click)="logout()" pButton type="button" label="Logout"></button>
+      You are logged in with {{getCurrentProviderName()}} . You can <button (click)="logout()" pButton type="button" label="Logout"></button>
     </div>
   `,
   styleUrls: ['login.component.scss']
 })
 export class LoginComponent implements OnInit {
 
-  constructor(private _auth: Auth) { }
+  constructor(private _auth: Auth, private changeDetectorRef: ChangeDetectorRef) { }
 
   ngOnInit() {
   }
 
   isLoggedIn = this._auth.isLoggedIn;
-  logout = this._auth.logout;
-  login = this._auth.login;
+  getCurrentProviderName = this._auth.getCurrentProviderName;
+
+  logout = () => {
+    this._auth.logout();
+    this.changeDetectorRef.detectChanges();
+  };
+
+  login = (provider: string) => {
+    this._auth.login(provider).then(r => {
+      this.changeDetectorRef.detectChanges();
+    });
+
+  };
 
   testAuth() {
     this._auth.testAuth();
