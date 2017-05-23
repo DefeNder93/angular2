@@ -9,45 +9,15 @@ connection.then(function(connectedDb){
   db = connectedDb;
 });
 
-var passport = require('passport');
-var GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
-
-// Use the GoogleStrategy within Passport.
-//   Strategies in Passport require a `verify` function, which accept
-//   credentials (in this case, an accessToken, refreshToken, and Google
-//   profile), and invoke a callback with a user object.
-passport.use(new GoogleStrategy({
-    clientID: '995361108283-ktr1i7ufe37rihcoin7toqch9faqvr8f.apps.googleusercontent.com',
-    clientSecret: 'RCqxHdQDDbygLcSil-4yiWy1',
-    callbackURL: "http://127.0.0.1:3000/auth/google/callback"
-  },
-  function(accessToken, refreshToken, profile, done) {
-    // User.findOrCreate({ googleId: profile.id }, function (err, user) {
-    //   return done(err, user);
-    // });
-    console.log('auth ->>');
-    return done(null, {});
-  }
-));
-
-router.get('/google',
-  passport.authenticate('google', { scope: ['https://www.googleapis.com/auth/plus.login'] }));
-
-router.get('/google/callback',
-  passport.authenticate('google', { failureRedirect: '/login' }),
-  function(req, res) {
-    res.redirect('/');
-  });
-
 var providers = {
   facebook: {
-    url: 'https://graph.facebook.com/me'
+    url: process.env.FACEBOOK_URL || 'https://graph.facebook.com/me'
   },
   google: {
-    url: 'https://www.googleapis.com/oauth2/v3/tokeninfo'
+    url: process.env.GOOGLE_URL || 'https://www.googleapis.com/oauth2/v3/tokeninfo'
   },
   github: {
-    url: 'https://api.github.com/user'
+    url: process.env.GITHUB_URL || 'https://api.github.com/user'
   }
 };
 
@@ -98,17 +68,16 @@ router.get('/secured', function (req, res) {
 });
 
 function createJwt(profile) {
-  return jwt.sign(profile, 'MY_PRIVATE_KEY', {
+  return jwt.sign(profile, process.env.PRIVATE_KEY, {
     expiresIn: '2d',
-    issuer: 'MY_APP'
+    issuer: 'APP'
   });
 }
 
 function verifyJwt(jwtString) {
-  return jwt.verify(jwtString, 'MY_PRIVATE_KEY', {
-    issuer: 'MY_APP'
+  return jwt.verify(jwtString, process.env.PRIVATE_KEY, {
+    issuer: 'APP'
   });
 }
 
-exports.isAuthenticated = passport.authenticate('google', { session : false });
 module.exports = router;

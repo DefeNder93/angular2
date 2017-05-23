@@ -6,6 +6,7 @@ var bodyParser = require('body-parser');
 var user = require('./controllers/user');
 var auth = require('./controllers/auth');
 var passport = require('passport');
+require('dotenv').config();
 
 var app = express();
 
