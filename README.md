@@ -16,8 +16,10 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 
 - Create file /server/.env
 - Add configuration params (see an example)
-- Example:
+- Example of config file:
+
 PRIVATE_KEY = MY_PRIVATE_KEY
 DB_NAME = learn_english
 DB_PORT = 27017
 DB_HOST = localhost
+PORT = 3000

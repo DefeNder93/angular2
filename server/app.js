@@ -1,14 +1,16 @@
-var express = require('express');
+"use strict";
+
+let express = require('express');
 //var path = require('path');
-var logger = require('morgan');
-var cookieParser = require('cookie-parser');
-var bodyParser = require('body-parser');
-var user = require('./controllers/user');
-var auth = require('./controllers/auth');
-var passport = require('passport');
+let logger = require('morgan');
+let cookieParser = require('cookie-parser');
+let bodyParser = require('body-parser');
+let user = require('./controllers/user');
+let auth = require('./controllers/auth');
+let passport = require('passport');
 require('dotenv').config();
 
-var app = express();
+let app = express();
 
 app.use(logger('dev'));
 app.use(bodyParser.json());
@@ -32,8 +34,9 @@ app.use(function(req, res, next) {
 app.use('/user', user);
 app.use('/auth', auth);
 
-app.listen(3000, function () {
-  console.log('App listening on port 3000!')
+let port = process.env.PORT || 3000;
+app.listen(port, function () {
+  console.log('App listening on port ' + port + '!')
 });
 
 module.exports = app;
