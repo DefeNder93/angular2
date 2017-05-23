@@ -1,6 +1,3 @@
-import { Injectable }              from '@angular/core';
-
-@Injectable()
 export class LocalStorage {
 
   static set(key: string, item: any) {

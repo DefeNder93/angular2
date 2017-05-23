@@ -11,6 +11,7 @@ import {httpFactory} from "./override/httpFactory";
 import {HeaderComponent} from "./header/header.component";
 import {LoginComponent} from "./login/login.component";
 import {TaskModule} from "./tasks/task/task.module";
+import {ButtonModule} from 'primeng/primeng';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,8 @@ import {TaskModule} from "./tasks/task/task.module";
     HttpModule,
     AppRoutingModule,
     TaskModule,
-    MenubarModule
+    MenubarModule,
+    ButtonModule
   ],
   providers: [
     {
