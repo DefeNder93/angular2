@@ -24,17 +24,13 @@ export class Auth {
       });
   };
 
-  isLoggedIn = () => {
-    return LocalStorage.get('auth') !== null;
-  };
+  isLoggedIn = () => LocalStorage.get('auth') !== null;
+
+  logout = () => LocalStorage.set('auth', null);
 
   getCurrentProviderName = () => {
     let auth = LocalStorage.get('auth');
     return auth ? auth.provider : null;
-  };
-
-  logout = () => {
-    LocalStorage.set('auth', null);
   };
 
   authHandler = (auth, provider: string) => {

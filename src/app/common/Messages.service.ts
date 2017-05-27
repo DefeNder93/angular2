@@ -21,6 +21,8 @@ export class Messages {
   showSuccess = (msg: string, summary?: string, life?: number) => this.showMessage(msg, 'success', summary, life);
 
   private showMessage = (msg: string, severity: string, summary?: string, life?: number) =>
-    this._observer.next({severity: severity, summary: summary || 'Info Message', detail: msg, life: life || 10000});
+    this._observer.next({severity: severity, summary: summary || this.getMessageType(severity) + ' Message', detail: msg, life: life || 10000});
+
+  private getMessageType = (severity: string) => severity.charAt(0).toUpperCase() + severity.substr(1);
 
 }
