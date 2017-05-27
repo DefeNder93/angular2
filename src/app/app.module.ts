@@ -12,6 +12,7 @@ import {HeaderComponent} from "./header/header.component";
 import {LoginComponent} from "./login/login.component";
 import {TaskModule} from "./tasks/task/task.module";
 import {ButtonModule} from 'primeng/primeng';
+import {GrowlModule} from 'primeng/primeng';
 
 @NgModule({
   declarations: [
@@ -27,7 +28,8 @@ import {ButtonModule} from 'primeng/primeng';
     AppRoutingModule,
     TaskModule,
     MenubarModule,
-    ButtonModule
+    ButtonModule,
+    GrowlModule
   ],
   providers: [
     {

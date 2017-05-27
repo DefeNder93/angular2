@@ -1,31 +1,37 @@
-import { Component } from '@angular/core';
-//fimport {Http} from "@angular/http";
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Auth} from "./common/auth/Auth.service";
 import {Config} from "./common/Config.service";
 import {LocalStorage} from "./common/LocalStorage.service";
 import {Api} from "./common/Api.service";
+import {Message} from 'primeng/primeng';
+import {Messages} from "./common/Messages.service";
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['app.component.scss'],
-  providers: [Api, Auth, Config, LocalStorage]
+  providers: [Api, Auth, Config, LocalStorage, Messages]
 })
-export class AppComponent {
-  // private http: Http,
-  constructor(private auth: Auth) {
-    console.log('it works');
-  }
+export class AppComponent implements OnDestroy, OnInit{
+  constructor(private _auth: Auth, private _messages: Messages) {}
+
+  private subscription: any;
+  life: number = 10000;
+  messages: Message[] = [];
 
   ngOnInit() {
-    // this.http.get('http://localhost:3000/user')
-    //   .subscribe(data => {
-    //     console.log('test db (user)');
-    //     console.log(data);
-    //   });
-
-    this.auth.init();
+    this._auth.init();
+    this.messages = [];
+    this.subscription = this._messages.showMessage$.subscribe(
+      messageConfig => this.showMessage(messageConfig));
   }
 
-  title = 'app works!';
+  private showMessage(config: object) {
+    this.life = config['life'];
+    this.messages.push(config);
+  }
+
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
+  }
 }
