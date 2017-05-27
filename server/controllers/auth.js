@@ -46,13 +46,47 @@ function validateWithProvider(network, socialToken) {
 router.post('/social', function (req, res) {
   let network = req.body.network;
   let socialToken = req.body.socialToken;
-  validateWithProvider(network, socialToken).then(function (profile) {
-    // Returns a server signed JWT
-    res.send(createJwt(profile));
-  }).catch(function (err) {
-    res.send('Failed!' + err.message);
-  });
+  validateWithProvider(network, socialToken).then(profile => {
+    let token = createJwt(profile);
+    findUser(profile.id).then(r => {
+      r ? res.send(token) // user is exists
+        : createNewUser(profile.id, network).then(r => {
+          res.send(token); // new user was created
+        });
+    });
+  }).catch(err => res.send('Failed!' + err.message));
 });
+
+function findUser(id) {
+  return new Promise(function (resolve, reject) {
+    db.collection('user').findOne({'socials.facebook': id}, function(err, result){
+      err ? reject(err) : resolve(result);
+    });
+  }).catch(r => {
+    console.log(r);
+  });
+}
+
+function createNewUser(id, network) {
+  let newUser = getNewUserTemplate();
+  newUser.socials[network] = id;
+  return db.collection('user').insertOne(newUser).catch(r => {
+    console.log(r);
+  });
+}
+
+function getNewUserTemplate() {
+  return {
+    firstName: '',
+    lastName: '',
+    email: '',
+    socials: {
+      facebook: null,
+      google: null,
+      github: null
+    }
+  }
+}
 
 // just for test
 router.get('/secured', function (req, res) {

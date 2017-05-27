@@ -13,6 +13,8 @@ import {LoginComponent} from "./login/login.component";
 import {TaskModule} from "./tasks/task/task.module";
 import {ButtonModule} from 'primeng/primeng';
 import {GrowlModule} from 'primeng/primeng';
+import {ProfileComponent} from "./profile/profile.component";
+import {InputTextModule} from 'primeng/primeng';
 
 @NgModule({
   declarations: [
@@ -20,6 +22,7 @@ import {GrowlModule} from 'primeng/primeng';
     AppComponent,
     TestComponent,
     HeaderComponent,
+    ProfileComponent
   ],
   imports: [
     BrowserModule,
@@ -29,7 +32,8 @@ import {GrowlModule} from 'primeng/primeng';
     TaskModule,
     MenubarModule,
     ButtonModule,
-    GrowlModule
+    GrowlModule,
+    InputTextModule
   ],
   providers: [
     {

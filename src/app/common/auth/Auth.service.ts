@@ -30,7 +30,7 @@ export class Auth {
 
   getCurrentProviderName = () => {
     let auth = LocalStorage.get('auth');
-    return auth ? auth.provider : null;
+    return auth = LocalStorage.get('auth') ? auth.provider : null;
   };
 
   authHandler = (auth, provider: string) => {
@@ -57,6 +57,13 @@ export class Auth {
         console.log('hello js auth social error');
         console.log(r);
       });
+    });
+  };
+
+  addSocial = (provider: string) => {
+    return new Promise<string>((resolve, reject) => {
+      resolve();
+      // TODO
     });
   };
 

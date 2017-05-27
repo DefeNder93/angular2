@@ -18,7 +18,7 @@ export class Messages {
 
   showWarning = (msg: string, summary?: string, life?: number) => this.showMessage(msg, 'warn', summary, life);
 
-  showSuccess = (msg: string, summary?: string, life?: number) => this.showMessage(msg, 'success', summary, life);
+  showSuccess = (msg: string, summary?: string, life?: number) => this.showMessage(msg, 'success', summary, life || 4000);
 
   private showMessage = (msg: string, severity: string, summary?: string, life?: number) =>
     this._observer.next({severity: severity, summary: summary || this.getMessageType(severity) + ' Message', detail: msg, life: life || 10000});

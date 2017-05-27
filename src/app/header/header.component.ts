@@ -14,12 +14,6 @@ export class HeaderComponent implements OnInit {
   private items: MenuItem[];
 
   ngOnInit() {
-
-    // test of messages
-    // setTimeout(() => {
-    //   this._messages.showInfo('test', 'Test title', 1000);
-    // }, 1000);
-
     this.items = [
       {
         label: 'Login',
@@ -28,9 +22,12 @@ export class HeaderComponent implements OnInit {
       {
         label: 'Task',
         routerLink: ['/task/1']
+      },
+      {
+        label: 'Profile',
+        routerLink: ['/profile']
       }
     ];
-
   }
 
 }
