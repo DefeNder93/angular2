@@ -5,10 +5,10 @@ let express = require('express');
 let logger = require('morgan');
 let cookieParser = require('cookie-parser');
 let bodyParser = require('body-parser');
+require('dotenv').config();
 let user = require('./controllers/user');
 let auth = require('./controllers/auth');
 let passport = require('passport');
-require('dotenv').config();
 
 let app = express();
 
