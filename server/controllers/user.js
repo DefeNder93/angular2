@@ -9,7 +9,6 @@ connection.then(function(connectedDb){
   db = connectedDb;
 });
 
-/* GET users listing. */
 router.get('/', function(req, res, next) {
   connection.then(function(){
     db.collection('user').find().toArray(function (err, result) {
@@ -17,6 +16,14 @@ router.get('/', function(req, res, next) {
       res.json(result);
     });
   });
+});
+
+router.get('/self', function(req, res, next) {
+  // TODO get user by auth info
+});
+
+router.put('/self', function(req, res, next) {
+  // TODO put user auth info
 });
 
 module.exports = router;
