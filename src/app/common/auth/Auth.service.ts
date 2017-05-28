@@ -15,13 +15,8 @@ export class Auth {
   constructor (private _config: Config, private _api: Api, private _messages: Messages) {}
 
   testAuth = () => {
-    return this._api.testAuth()
-      .then(r => {
-        console.log('secured auth: ' + r.text());
-      })
-      .catch(r => {
-        this._messages.showError(r, 'Secured Auth Error');
-      });
+    return this._api.testAuth().then(r => console.log('secured auth: ' + r.text()))
+      .catch(r => this._messages.showError(r, 'Secured Auth Error'));
   };
 
   isLoggedIn = () => LocalStorage.get('auth') !== null;
@@ -57,14 +52,8 @@ export class Auth {
         this.authHandler(r, provider).then(r => {
             LocalStorage.set('auth', {token: r.text(), provider: provider});
             resolve();
-          }).catch(r => {
-            reject();
-            this._messages.showError(r, 'Social Auth Error');
-          });
-      }, r => {
-        reject();
-        this._messages.showError(r, 'HelloJS Auth Error');
-      });
+          }).catch(r => this._messages.rejectWithError(reject, r, 'Social Auth Error'));
+      }, r => this._messages.rejectWithError(reject, r, 'HelloJS Auth Error'));
     });
   };
 
@@ -72,21 +61,20 @@ export class Auth {
     let auth = LocalStorage.get('auth');
     let existingToken = auth && auth.token;
     let existingProvider = auth && auth.provider;
-    if (!existingToken || !existingProvider) {
-      this._messages.showError('You should have at least one network');
-      return;
-    }
+    if (!this.checkParams(existingToken, existingProvider)) return;
     return new Promise<string>((resolve, reject) => {
       hello(provider).login({force: true}).then(r => {
-        this.addSocialHandler(r, provider, existingProvider, existingToken).then(r => resolve()).catch(r => {
-          reject();
-          this._messages.showError(r, 'Social Auth Error');
-        });
-      }, r => {
-        reject();
-        this._messages.showError(r, 'HelloJS Auth Error');
-      });
+        this.addSocialHandler(r, provider, existingProvider, existingToken).then(r => resolve()).catch(r =>
+          this._messages.rejectWithError(reject, r, 'Social Auth Error'));
+      }, r => this._messages.rejectWithError(reject, r, 'HelloJS Auth Error'));
     });
+  };
+
+  private checkParams = (existingToken, existingProvider) => {
+    if (!existingToken || !existingProvider) {
+      this._messages.showError('You should have at least one network');
+    }
+    return existingToken || existingProvider;
   };
 
   init = () => {

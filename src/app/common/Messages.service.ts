@@ -16,6 +16,11 @@ export class Messages {
 
   showError = (msg: string, summary?: string, life?: number) => this.showMessage(msg, 'error', summary, life);
 
+  rejectWithError = (reject: any, msg: string, summary?: string, life?: number) => {
+    this.showError(msg, summary, life);
+    reject();
+  };
+
   showWarning = (msg: string, summary?: string, life?: number) => this.showMessage(msg, 'warn', summary, life);
 
   showSuccess = (msg: string, summary?: string, life?: number) => this.showMessage(msg, 'success', summary, life || 4000);
