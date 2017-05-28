@@ -6,16 +6,14 @@ export class Api {
 
   constructor (private _http: Http) {}
 
-  authSocial = (data) => {
-    return this._http.post('http://localhost:3000/auth/social', data).toPromise();
-  };
+  private host = 'http://localhost:3000'; // TODO move to config
 
-  addSocial = (data) => {
-    return this._http.post('http://localhost:3000/auth/add-social', data).toPromise();
-  };
+  authSocial = (data) => this._http.post(this.host + '/auth/social', data).toPromise();
 
-  testAuth = () => {
-    return this._http.get('http://localhost:3000/auth/secured').toPromise();
-  };
+  addSocial = (data) => this._http.post(this.host + '/auth/add-social', data).toPromise();
+
+  getUser = () => this._http.get(this.host + '/auth/user').toPromise();
+
+  testAuth = () => this._http.get(this.host + '3000/auth/secured').toPromise();
 
 }

@@ -81,6 +81,10 @@ export class Auth {
     this._config.get().then(config => {
       this.initHello(config['GOOGLE_CLIENT_ID'], config['FACEBOOK_CLIENT_ID'], config['GITHUB_CLIENT_ID']);
     });
+    this.isLoggedIn() && this._api.getUser().then(function(r){
+      console.log('user');
+      console.log(r);
+    }); // TODO create user service
   };
 
   private initHello(googleId: string, facebookId: string, githubId: string) {

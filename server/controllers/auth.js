@@ -32,7 +32,9 @@ function validateWithProvider(network, socialToken) {
       },
       function (error, response, body) {
         if (!error && response.statusCode == 200) {
-          resolve(JSON.parse(body));
+          let info = JSON.parse(body);
+          info.provider = network;
+          resolve(info);
         } else {
           console.log('error');
           console.log(error);
@@ -61,6 +63,15 @@ router.post('/add-social', function (req, res) {
     let userId = getUserIdFromProfile(profile);
     addSocialNetwork(userId, req.body.network, req.body.existingProvider, req.body.existingToken).then(r => res.send(token));
   }).catch(err => res.send('Failed!' + err.message));
+});
+
+router.get('/user', function(req, res) {
+  let info = checkRights(req, res);
+  findUser(getUserIdFromProfile(info), info.provider).then(r => res.send(r));
+});
+
+router.put('/user', function(req, res) {
+  // TODO put user auth info
 });
 
 let getUserIdFromProfile = (p) => p.id || p.sub;
