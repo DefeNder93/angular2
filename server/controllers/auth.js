@@ -44,25 +44,56 @@ function validateWithProvider(network, socialToken) {
 }
 
 router.post('/social', function (req, res) {
-  let network = req.body.network;
-  let socialToken = req.body.socialToken;
-  validateWithProvider(network, socialToken).then(profile => {
+  validateWithProvider(req.body.network, req.body.socialToken).then(profile => {
     let token = createJwt(profile);
-    findUser(profile.id).then(r => {
-      r ? res.send(token) // user is exists
-        : createNewUser(profile.id, network).then(r => {
+    let userId = profile.id || profile.sub;
+    findUser(userId, req.body.network).then(r => {
+      if (r) {
+        res.send(token);
+      } else if (req.body.existingToken) { // user is exists, and it needs to add new network
+        addSocialNetwork(userId, req.body.network, req.body.existingProvider, req.body.existingToken).then(r => {
           res.send(token); // new user was created
         });
+      } else {
+        createNewUser(userId, req.body.network).then(r => {
+          res.send(token); // new user was created
+        });
+      }
     });
   }).catch(err => res.send('Failed!' + err.message));
 });
 
-function findUser(id) {
+// router.post('/add-social', function (req, res) {
+//   validateWithProvider(req.body.network, req.body.socialToken).then(profile => {
+//     let token = createJwt(profile);
+//     findUser(profile.id, req.body.network).then(r => {
+//
+//       // r ? res.send(token) // user is exists
+//       //   : createNewUser(profile.id, req.body.network).then(r => {
+//       //   res.send(token); // new user was created
+//       // });
+//     });
+//   }).catch(err => res.send('Failed!' + err.message));
+// });
+
+function findUser(id, provider) {
   return new Promise(function (resolve, reject) {
-    db.collection('user').findOne({'socials.facebook': id}, function(err, result){
+    let query = {};
+    query['socials.' + provider] = id;
+    db.collection('user').findOne(query, function(err, result){
       err ? reject(err) : resolve(result);
     });
   }).catch(r => {
+    console.log(r);
+  });
+}
+
+function addSocialNetwork(id, network, existingProvider, existingToken) {
+  let query = {}, update = {$set: {}};
+  let existingProviderInfo = verifyJwt(existingToken);
+  query['socials.' + existingProvider] = existingProviderInfo.id || existingProviderInfo.sub;
+  update.$set['socials.' + network] = id;
+  return db.collection('user').findOneAndUpdate(query, update).catch(r => {
     console.log(r);
   });
 }

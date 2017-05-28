@@ -2,16 +2,17 @@ import {Injectable}              from '@angular/core';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/toPromise';
-import {LocalStorage} from "../LocalStorage.service";
-import {Config} from "../Config.service";
-import {Api} from "../Api.service";
+import {LocalStorage} from '../LocalStorage.service';
+import {Config} from '../Config.service';
+import {Api} from '../Api.service';
+import {Messages} from '../Messages.service';
 
 declare let hello: any;  // hello.js doesn't have updated typings file
 
 @Injectable()
 export class Auth {
 
-  constructor (private _config: Config, private _api: Api) {}
+  constructor (private _config: Config, private _api: Api, private _messages: Messages) {}
 
   testAuth = () => {
     return this._api.testAuth()
@@ -19,8 +20,7 @@ export class Auth {
         console.log('secured auth: ' + r.text());
       })
       .catch(r => {
-        console.log('secured auth error');
-        console.log(r);
+        this._messages.showError(r, 'Secured Auth Error');
       });
   };
 
@@ -33,11 +33,13 @@ export class Auth {
     return auth = LocalStorage.get('auth') ? auth.provider : null;
   };
 
-  authHandler = (auth, provider: string) => {
+  authHandler = (auth, provider: string, existingProvider?: string, existingToken?: string) => {
     let socialToken = auth.authResponse.access_token;
     return this._api.authSocial({
       network: provider,
-      socialToken: socialToken
+      socialToken: socialToken,
+      existingToken: existingToken,
+      existingProvider: existingProvider
     });
   };
 
@@ -47,23 +49,35 @@ export class Auth {
         this.authHandler(r, provider).then(r => {
             LocalStorage.set('auth', {token: r.text(), provider: provider});
             resolve();
-          })
-          .catch(r => {
+          }).catch(r => {
             reject();
-            console.log('auth social error');
-            console.log(r);
+            this._messages.showError(r, 'Social Auth Error');
           });
       }, r => {
-        console.log('hello js auth social error');
-        console.log(r);
+        reject();
+        this._messages.showError(r, 'HelloJS Auth Error');
       });
     });
   };
 
   addSocial = (provider: string) => {
+    let auth = LocalStorage.get('auth');
+    let existingToken = auth && auth.token;
+    let existingProvider = auth && auth.provider;
+    if (!existingToken || !existingProvider) {
+      this._messages.showError('You should have at least one network');
+      return;
+    }
     return new Promise<string>((resolve, reject) => {
-      resolve();
-      // TODO
+      hello(provider).login({force: true}).then(r => {
+        this.authHandler(r, provider, existingProvider, existingToken).then(r => resolve()).catch(r => {
+          reject();
+          this._messages.showError(r, 'Social Auth Error');
+        });
+      }, r => {
+        reject();
+        this._messages.showError(r, 'HelloJS Auth Error');
+      });
     });
   };
 

@@ -10,6 +10,10 @@ export class Api {
     return this._http.post('http://localhost:3000/auth/social', data).toPromise();
   };
 
+  addSocial = (data) => {
+    return this._http.post('http://localhost:3000/auth/add-social', data).toPromise();
+  };
+
   testAuth = () => {
     return this._http.get('http://localhost:3000/auth/secured').toPromise();
   };
