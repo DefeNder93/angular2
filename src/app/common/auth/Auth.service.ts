@@ -33,9 +33,17 @@ export class Auth {
     return auth = LocalStorage.get('auth') ? auth.provider : null;
   };
 
-  authHandler = (auth, provider: string, existingProvider?: string, existingToken?: string) => {
+  authHandler = (auth, provider: string) => {
     let socialToken = auth.authResponse.access_token;
     return this._api.authSocial({
+      network: provider,
+      socialToken: socialToken
+    });
+  };
+
+  addSocialHandler = (auth, provider: string, existingProvider: string, existingToken: string) => {
+    let socialToken = auth.authResponse.access_token;
+    return this._api.addSocial({
       network: provider,
       socialToken: socialToken,
       existingToken: existingToken,
@@ -70,7 +78,7 @@ export class Auth {
     }
     return new Promise<string>((resolve, reject) => {
       hello(provider).login({force: true}).then(r => {
-        this.authHandler(r, provider, existingProvider, existingToken).then(r => resolve()).catch(r => {
+        this.addSocialHandler(r, provider, existingProvider, existingToken).then(r => resolve()).catch(r => {
           reject();
           this._messages.showError(r, 'Social Auth Error');
         });

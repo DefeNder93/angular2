@@ -46,43 +46,30 @@ function validateWithProvider(network, socialToken) {
 router.post('/social', function (req, res) {
   validateWithProvider(req.body.network, req.body.socialToken).then(profile => {
     let token = createJwt(profile);
-    let userId = profile.id || profile.sub;
-    findUser(userId, req.body.network).then(r => {
-      if (r) {
-        res.send(token);
-      } else if (req.body.existingToken) { // user is exists, and it needs to add new network
-        addSocialNetwork(userId, req.body.network, req.body.existingProvider, req.body.existingToken).then(r => {
-          res.send(token); // new user was created
-        });
-      } else {
-        createNewUser(userId, req.body.network).then(r => {
-          res.send(token); // new user was created
-        });
-      }
-    });
+    let userId = getUserIdFromProfile(profile);
+    findUser(userId, req.body.network).then(r => r ? res.send(token) :
+      createNewUser(userId, req.body.network).then(r => res.send(token)));
   }).catch(err => res.send('Failed!' + err.message));
 });
 
-// router.post('/add-social', function (req, res) {
-//   validateWithProvider(req.body.network, req.body.socialToken).then(profile => {
-//     let token = createJwt(profile);
-//     findUser(profile.id, req.body.network).then(r => {
-//
-//       // r ? res.send(token) // user is exists
-//       //   : createNewUser(profile.id, req.body.network).then(r => {
-//       //   res.send(token); // new user was created
-//       // });
-//     });
-//   }).catch(err => res.send('Failed!' + err.message));
-// });
+router.post('/add-social', function (req, res) {
+  if (!checkRights(req, res)) {
+    return;
+  }
+  validateWithProvider(req.body.network, req.body.socialToken).then(profile => {
+    let token = createJwt(profile);
+    let userId = getUserIdFromProfile(profile);
+    addSocialNetwork(userId, req.body.network, req.body.existingProvider, req.body.existingToken).then(r => res.send(token));
+  }).catch(err => res.send('Failed!' + err.message));
+});
+
+let getUserIdFromProfile = (p) => p.id || p.sub;
 
 function findUser(id, provider) {
   return new Promise(function (resolve, reject) {
     let query = {};
     query['socials.' + provider] = id;
-    db.collection('user').findOne(query, function(err, result){
-      err ? reject(err) : resolve(result);
-    });
+    db.collection('user').findOne(query, (err, result) => err ? reject(err) : resolve(result));
   }).catch(r => {
     console.log(r);
   });
@@ -91,19 +78,15 @@ function findUser(id, provider) {
 function addSocialNetwork(id, network, existingProvider, existingToken) {
   let query = {}, update = {$set: {}};
   let existingProviderInfo = verifyJwt(existingToken);
-  query['socials.' + existingProvider] = existingProviderInfo.id || existingProviderInfo.sub;
+  query['socials.' + existingProvider] = getUserIdFromProfile(existingProviderInfo);
   update.$set['socials.' + network] = id;
-  return db.collection('user').findOneAndUpdate(query, update).catch(r => {
-    console.log(r);
-  });
+  return db.collection('user').findOneAndUpdate(query, update).catch(r => console.log(r));
 }
 
 function createNewUser(id, network) {
   let newUser = getNewUserTemplate();
   newUser.socials[network] = id;
-  return db.collection('user').insertOne(newUser).catch(r => {
-    console.log(r);
-  });
+  return db.collection('user').insertOne(newUser).catch(r => console.log(r));
 }
 
 function getNewUserTemplate() {
@@ -116,6 +99,15 @@ function getNewUserTemplate() {
       google: null,
       github: null
     }
+  }
+}
+
+function checkRights(req, res) {
+  let jwtString = req.headers.auth;
+  try {
+    return verifyJwt(jwtString);
+  } catch (err) {
+    res.send('Not allowed');
   }
 }
 
