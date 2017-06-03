@@ -16,6 +16,8 @@ export class Messages {
 
   showError = (msg: string, summary?: string, life?: number) => this.showMessage(msg, 'error', summary, life);
 
+  showServerError = (msg) => this.showError(msg, 'Server Error', 10000);
+
   rejectWithError = (reject: any, msg: string, summary?: string, life?: number) => {
     this.showError(msg, summary, life);
     reject();

@@ -28,7 +28,10 @@ function validateWithProvider(network, socialToken) {
     // Send a GET request to Facebook with the token as query string
     request({
         url: providers[network].url,
-        qs: {access_token: socialToken}
+        qs: {access_token: socialToken},
+        headers: {
+          'User-Agent': 'LearnEnglish-App'
+        }
       },
       function (error, response, body) {
         if (!error && response.statusCode == 200) {
@@ -71,7 +74,10 @@ router.get('/user', function(req, res) {
 });
 
 router.put('/user', function(req, res) {
-  // TODO put user auth info
+  let info = checkRights(req, res);
+  updateUser(getUserIdFromProfile(info), info.provider, req.body).then(r => {
+    res.send(r);
+  });
 });
 
 let getUserIdFromProfile = (p) => p.id || p.sub;
@@ -84,6 +90,15 @@ function findUser(id, provider) {
   }).catch(r => {
     console.log(r);
   });
+}
+
+function updateUser(id, provider, user) {
+  let query = {}, update = {$set: {}};
+  query['socials.' + provider] = id;
+  update.$set.firstName = user.firstName;
+  update.$set.lastName = user.lastName;
+  update.$set.email = user.email;
+  return db.collection('user').findOneAndUpdate(query, update).catch(r => console.log(r));
 }
 
 function addSocialNetwork(id, network, existingProvider, existingToken) {

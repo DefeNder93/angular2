@@ -14,6 +14,8 @@ export class Api {
 
   getUser = () => this._http.get(this.host + '/auth/user').toPromise();
 
+  updateUser = (user: object) => this._http.put(this.host + '/auth/user', user).toPromise();
+
   testAuth = () => this._http.get(this.host + '3000/auth/secured').toPromise();
 
 }

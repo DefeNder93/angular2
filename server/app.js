@@ -9,8 +9,10 @@ require('dotenv').config();
 let user = require('./controllers/user');
 let auth = require('./controllers/auth');
 let passport = require('passport');
+let cors = require('cors');
 
 let app = express();
+app.use(cors());
 
 app.use(logger('dev'));
 app.use(bodyParser.json());
