@@ -1,4 +1,4 @@
-import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Auth} from '../common/auth/Auth.service';
 import {Messages} from '../common/Messages.service';
 
@@ -32,10 +32,10 @@ export class ProfileComponent implements OnInit {
 
   user: object = {email: '', firstName: '', lastName: '', socials: {facebook: null, google: null, github: null}};
 
-  constructor(private _auth: Auth, private _messages: Messages, private changeDetectorRef: ChangeDetectorRef) { }
+  constructor(private _auth: Auth, private _messages: Messages) { }
 
-  ngOnInit = () => {
-    this._auth.getUser().then(u => this.user = u);
+  ngOnInit () {
+    this._auth.getUser().then(u => {this.user = u; console.log('ngOnInit')} );
   };
 
   save = () => this._auth.saveUser(this.user)
