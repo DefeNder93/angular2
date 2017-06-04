@@ -6,15 +6,16 @@ import {LocalStorage} from '../LocalStorage.service';
 import {Config} from '../Config.service';
 import {Api} from '../Api.service';
 import {Messages} from '../Messages.service';
+import {User} from '../../models/User';
 
 declare const hello: any;  // hello.js doesn't have updated typings file
 
 @Injectable()
 export class Auth {
 
-  private user: object = null;
+  private user: User = null;
 
-  constructor (private _config: Config, private _api: Api, private _messages: Messages) {}
+  constructor (private _config: Config, private _api: Api, private _messages: Messages, private _localStorage: LocalStorage) {}
 
   testAuth = () => {
     return this._api.testAuth().then(r => console.log('secured auth: ' + r.text()))
@@ -23,14 +24,14 @@ export class Auth {
 
   getUser = () => this.user ? Promise.resolve(this.user) : this._api.getUser().then(r => r.json());
 
-  saveUser = (user: object) => this._api.updateUser(user);
+  saveUser = (user: User) => this._api.updateUser(user);
 
-  isLoggedIn = () => LocalStorage.get('auth') !== null;
+  isLoggedIn = () => this._localStorage.get('auth') !== null;
 
-  logout = () => LocalStorage.set('auth', null);
+  logout = () => this._localStorage.set('auth', null);
 
   getCurrentProviderName = () => {
-    const auth = LocalStorage.get('auth');
+    const auth = this._localStorage.get('auth');
     return auth ? auth.provider : null;
   };
 
@@ -56,7 +57,7 @@ export class Auth {
     return new Promise<string>((resolve, reject) => {
       hello(provider).login({force: true}).then(r => {
         this.authHandler(r, provider).then(token => {
-            LocalStorage.set('auth', {token: token.text(), provider: provider});
+            this._localStorage.set('auth', {token: token.text(), provider: provider});
             resolve();
           }).catch(e => this._messages.rejectWithError(reject, e, 'Social Auth Error'));
       }, e => {
@@ -66,7 +67,7 @@ export class Auth {
   };
 
   addSocial = (provider: string) => {
-    const auth = LocalStorage.get('auth');
+    const auth = this._localStorage.get('auth');
     const existingToken = auth && auth.token;
     const existingProvider = auth && auth.provider;
     if (!this.checkParams(existingToken, existingProvider)) { return }

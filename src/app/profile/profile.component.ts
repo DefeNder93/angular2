@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {Auth} from '../common/auth/Auth.service';
 import {Messages} from '../common/Messages.service';
+import {User} from '../models/User';
 
 @Component({
   selector: 'app-profile',
@@ -30,7 +31,7 @@ import {Messages} from '../common/Messages.service';
 })
 export class ProfileComponent implements OnInit {
 
-  user: object = {email: '', firstName: '', lastName: '', socials: {facebook: null, google: null, github: null}};
+  user: User = new User();
 
   constructor(private _auth: Auth, private _messages: Messages) { }
 

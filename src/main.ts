@@ -12,7 +12,7 @@ if (environment.production) {
 }
 
 export class AppConfig {
-  static config: object;
+  static config: Config;
 }
 
 function deferredBootstrap() {
@@ -29,6 +29,7 @@ function initConfig() {
     .then(r => {
       config.init(r.json());
       AppConfig.config = config;
+      console.log('set config');
     }).catch(r => console.log('Bootstrap error', r));
 }
 deferredBootstrap();

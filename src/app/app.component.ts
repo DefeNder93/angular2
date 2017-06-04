@@ -4,12 +4,14 @@ import {LocalStorage} from './common/LocalStorage.service';
 import {Api} from './common/Api.service';
 import {Message} from 'primeng/primeng';
 import {Messages} from './common/Messages.service';
+import {Config} from './common/Config.service';
+import {AppConfig} from '../main';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['app.component.scss'],
-  providers: [Api, Auth, LocalStorage, Messages]
+  providers: [Api, Auth, LocalStorage, Messages, LocalStorage, {provide: Config, useFactory: () => {console.log('useFactory'); return AppConfig.config}}]
 })
 export class AppComponent implements OnDestroy, OnInit {
 

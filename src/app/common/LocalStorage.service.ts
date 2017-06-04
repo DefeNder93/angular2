@@ -1,34 +1,41 @@
+import {Injectable} from '@angular/core';
+import {Config} from './Config.service';
+@Injectable()
 export class LocalStorage {
 
-  static set(key: string, item: any) {
-    // TODO customize prefix
-    localStorage.setItem('app_' + key, this.getItemAsString(item));
+  constructor(private _config: Config) {}
+
+  // TODO find a way how to customize app prefix (consider usage in /src/app/override/InterceptedHttp.ts)
+  set(key: string, item: any, prefix?: string) {
+    localStorage.setItem(this.getPrefix(prefix) + key, this.getItemAsString(item));
   }
 
-  static getItemAsString(item: any) {
+  getItemAsString(item: any) {
     if (item !== null && typeof item === 'object') {
       return JSON.stringify(item);
     }
     return item;
   }
 
-  static getItemFromString(str: string) {
+  getItemFromString(str: string) {
     if (this.isJsonString(str)) {
       return JSON.parse(str);
     }
     return str;
   }
 
-  static isJsonString(str) {
+  private isJsonString(str) {
     try {
       JSON.parse(str);
     } catch (e) {
       return false;
     }
-  return true;
-}
-
-  static get(key: string): any {
-    return this.getItemFromString(localStorage.getItem('app_' + key));
+    return true;
   }
+
+  get(key: string, prefix?: string): any {
+    return this.getItemFromString(localStorage.getItem(this.getPrefix(prefix) + key));
+  }
+
+  private getPrefix = (prefix) => prefix || this._config.get('APP_PREFIX') || 'app_'
 }

@@ -1,6 +1,9 @@
 import { ConnectionBackend, RequestOptions, Request, RequestOptionsArgs, Response, Http, Headers} from '@angular/http';
 import {Observable} from 'rxjs/Rx';
 import {LocalStorage} from '../common/LocalStorage.service';
+import {ReflectiveInjector} from '@angular/core';
+import {Config} from '../common/Config.service';
+import {AppConfig} from '../../main';
 
 export class InterceptedHttp extends Http {
   constructor(backend: ConnectionBackend, defaultOptions: RequestOptions) {
@@ -35,7 +38,8 @@ export class InterceptedHttp extends Http {
       options.headers = new Headers();
     }
 
-    const auth = LocalStorage.get('auth');
+    const _localStorage = ReflectiveInjector.resolveAndCreate([LocalStorage, Config]).get(LocalStorage);
+    const auth = _localStorage.get('auth', AppConfig.config.get('APP_PREFIX'));
     if (auth) {
       options.headers.append('Auth', auth.token);
     }

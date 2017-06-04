@@ -7,10 +7,13 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 - Create file /src/assets/config.json
 - Add configuration params (see an example for details)
 - Example: {
-             "GOOGLE_CLIENT_ID": "your_google_client_id",
-             "FACEBOOK_CLIENT_ID": "your_fb_client_id",
-             "GITHUB_CLIENT_ID": "your_github_client_id"
+             "GOOGLE_CLIENT_ID": "YOUR_CLIENT_ID",
+             "FACEBOOK_CLIENT_ID": "YOUR_CLIENT_ID",
+             "GITHUB_CLIENT_ID": "YOUR_CLIENT_ID",
+             "HOST": "http://localhost:3000",
+             "APP_PREFIX": "app_"
            }
+
 
 ###Setting up server config:
 

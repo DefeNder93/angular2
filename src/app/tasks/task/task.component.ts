@@ -10,15 +10,15 @@ import {InsertTaskComponent} from './types/insertTask/InsertTask';
   `,
   styleUrls: ['task.component.scss']
 })
-export class TaskComponent implements OnInit, AfterViewInit {
+export class TaskComponent implements AfterViewInit {
 
-  // docs https://angular.io/docs/ts/latest/cookbook/dynamic-component-loader.html
+  // doc https://angular.io/docs/ts/latest/cookbook/dynamic-component-loader.html
   @ViewChild(DynamicTaskDirective) dynamicTask: DynamicTaskDirective;
   constructor(private _componentFactoryResolver: ComponentFactoryResolver) { }
 
-  ngOnInit() {}
-
-  ngAfterViewInit = () => this.loadComponent();
+  ngAfterViewInit() {
+    this.loadComponent();
+  }
 
   loadComponent() {
     const componentFactory = this._componentFactoryResolver.resolveComponentFactory(InsertTaskComponent);
