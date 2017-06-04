@@ -15,6 +15,8 @@ import {ButtonModule} from 'primeng/primeng';
 import {GrowlModule} from 'primeng/primeng';
 import {ProfileComponent} from "./profile/profile.component";
 import {InputTextModule} from 'primeng/primeng';
+import {AppConfig} from "main";
+import {Config} from "./common/Config.service";
 
 @NgModule({
   declarations: [
@@ -40,7 +42,8 @@ import {InputTextModule} from 'primeng/primeng';
       provide: Http,
       useFactory: httpFactory,
       deps: [XHRBackend, RequestOptions]
-    }
+    },
+    {provide: Config, useFactory: () => AppConfig.config}
   ],
   bootstrap: [AppComponent]
 })

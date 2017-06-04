@@ -1,12 +1,15 @@
-import { Injectable }    from '@angular/core';
-import { Http }          from '@angular/http';
+import {Http} from "@angular/http";
+import {Injectable} from "@angular/core";
+import {Config} from "./Config.service";
 
 @Injectable()
 export class Api {
 
-  constructor (private _http: Http) {}
+  private host: string;
 
-  private host = 'http://localhost:3000'; // TODO move to config
+  constructor (private _http: Http, private _config: Config) {
+    this.host = _config.get('HOST');
+  }
 
   authSocial = (data) => this._http.post(this.host + '/auth/social', data).toPromise();
 
