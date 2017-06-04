@@ -11,10 +11,6 @@ if (environment.production) {
   enableProdMode();
 }
 
-export class AppConfig {
-  static config: Config;
-}
-
 function deferredBootstrap() {
   initConfig().then(function(){
     platformBrowserDynamic().bootstrapModule(AppModule);
@@ -29,7 +25,10 @@ function initConfig() {
     .then(r => {
       config.init(r.json());
       AppConfig.config = config;
-      console.log('set config');
     }).catch(r => console.log('Bootstrap error', r));
 }
 deferredBootstrap();
+
+export class AppConfig {
+  static config: Config;
+}

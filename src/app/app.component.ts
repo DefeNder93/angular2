@@ -11,7 +11,7 @@ import {AppConfig} from '../main';
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['app.component.scss'],
-  providers: [Api, Auth, LocalStorage, Messages, LocalStorage, {provide: Config, useFactory: () => {console.log('useFactory'); return AppConfig.config}}]
+  providers: [Api, Auth, LocalStorage, Messages, LocalStorage, {provide: Config, useFactory: () => AppConfig.config}]
 })
 export class AppComponent implements OnDestroy, OnInit {
 

@@ -5,8 +5,8 @@ export class LocalStorage {
 
   constructor(private _config: Config) {}
 
-  set(key: string, item: any, prefix?: string) {
-    localStorage.setItem(this.getPrefix(prefix) + key, this.getItemAsString(item));
+  set(key: string, item: any) {
+    localStorage.setItem(this.getPrefix() + key, this.getItemAsString(item));
   }
 
   getItemAsString(item: any) {
@@ -32,9 +32,9 @@ export class LocalStorage {
     return true;
   }
 
-  get(key: string, prefix?: string): any {
-    return this.getItemFromString(localStorage.getItem(this.getPrefix(prefix) + key));
+  get(key: string): any {
+    return this.getItemFromString(localStorage.getItem(this.getPrefix() + key));
   }
 
-  private getPrefix = (prefix) => prefix || this._config.get('LOCAL_STORAGE_PREFIX') || 'app_'
+  private getPrefix = () => this._config.get('LOCAL_STORAGE_PREFIX') || 'app_'
 }
