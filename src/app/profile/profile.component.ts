@@ -35,7 +35,7 @@ export class ProfileComponent implements OnInit {
   constructor(private _auth: Auth, private _messages: Messages) { }
 
   ngOnInit () {
-    this._auth.getUser().then(u => {this.user = u; console.log('ngOnInit')} );
+    this._auth.getUser().then(u => this.user = u);
   };
 
   save = () => this._auth.saveUser(this.user)
