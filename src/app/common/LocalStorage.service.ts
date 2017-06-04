@@ -5,7 +5,6 @@ export class LocalStorage {
 
   constructor(private _config: Config) {}
 
-  // TODO find a way how to customize app prefix (consider usage in /src/app/override/InterceptedHttp.ts)
   set(key: string, item: any, prefix?: string) {
     localStorage.setItem(this.getPrefix(prefix) + key, this.getItemAsString(item));
   }
