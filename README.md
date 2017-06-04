@@ -11,7 +11,7 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
              "FACEBOOK_CLIENT_ID": "YOUR_CLIENT_ID",
              "GITHUB_CLIENT_ID": "YOUR_CLIENT_ID",
              "HOST": "http://localhost:3000",
-             "APP_PREFIX": "app_"
+             "LOCAL_STORAGE_PREFIX": "app_"
            }
 
 

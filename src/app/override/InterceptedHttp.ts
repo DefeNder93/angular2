@@ -39,7 +39,7 @@ export class InterceptedHttp extends Http {
     }
 
     const _localStorage = ReflectiveInjector.resolveAndCreate([LocalStorage, Config]).get(LocalStorage);
-    const auth = _localStorage.get('auth', AppConfig.config.get('APP_PREFIX'));
+    const auth = _localStorage.get('auth', AppConfig.config.get('LOCAL_STORAGE_PREFIX'));
     if (auth) {
       options.headers.append('Auth', auth.token);
     }

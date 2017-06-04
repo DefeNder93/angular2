@@ -37,5 +37,5 @@ export class LocalStorage {
     return this.getItemFromString(localStorage.getItem(this.getPrefix(prefix) + key));
   }
 
-  private getPrefix = (prefix) => prefix || this._config.get('APP_PREFIX') || 'app_'
+  private getPrefix = (prefix) => prefix || this._config.get('LOCAL_STORAGE_PREFIX') || 'app_'
 }
