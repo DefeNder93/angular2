@@ -1,33 +1,29 @@
 import { Component, OnInit, ComponentFactoryResolver, ViewChild, AfterViewInit } from '@angular/core';
-import {CombineTask} from "./types/combineTask/CombineTask";
-import {DynamicTask} from "./dynamicTask.directive";
-import {InsertTask} from "./types/insertTask/InsertTask";
-// TODO https://angular.io/docs/ts/latest/cookbook/dynamic-component-loader.html
+import {CombineTaskComponent} from './types/combineTask/CombineTask';
+import {DynamicTaskDirective} from './dynamicTask.directive';
+import {InsertTaskComponent} from './types/insertTask/InsertTask';
 
 @Component({
   selector: 'app-task',
   template: `<p>task works!</p>
-  <ng-template dynamic-task></ng-template>
+  <ng-template appDynamicTask></ng-template>
   `,
   styleUrls: ['task.component.scss']
 })
 export class TaskComponent implements OnInit, AfterViewInit {
 
-  @ViewChild(DynamicTask) dynamicTask: DynamicTask;
+  // docs https://angular.io/docs/ts/latest/cookbook/dynamic-component-loader.html
+  @ViewChild(DynamicTaskDirective) dynamicTask: DynamicTaskDirective;
   constructor(private _componentFactoryResolver: ComponentFactoryResolver) { }
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
-  ngAfterViewInit() {
-    this.loadComponent();
-  }
-
+  ngAfterViewInit = () => this.loadComponent();
 
   loadComponent() {
-    let componentFactory = this._componentFactoryResolver.resolveComponentFactory(InsertTask);
-    //let componentFactory = this._componentFactoryResolver.resolveComponentFactory(CombineTask);
-    let viewContainerRef = this.dynamicTask.viewContainerRef;
+    const componentFactory = this._componentFactoryResolver.resolveComponentFactory(InsertTaskComponent);
+    // let componentFactory = this._componentFactoryResolver.resolveComponentFactory(CombineTask);
+    const viewContainerRef = this.dynamicTask.viewContainerRef;
     viewContainerRef.clear();
     viewContainerRef.createComponent(componentFactory);
   }

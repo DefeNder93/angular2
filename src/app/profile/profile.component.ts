@@ -1,6 +1,6 @@
 import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
-import {Auth} from "../common/auth/Auth.service";
-import {Messages} from "../common/Messages.service";
+import {Auth} from '../common/auth/Auth.service';
+import {Messages} from '../common/Messages.service';
 
 @Component({
   selector: 'app-profile',
@@ -30,23 +30,23 @@ import {Messages} from "../common/Messages.service";
 })
 export class ProfileComponent implements OnInit {
 
+  user: object = {email: '', firstName: '', lastName: '', socials: {facebook: null, google: null, github: null}};
+
   constructor(private _auth: Auth, private _messages: Messages, private changeDetectorRef: ChangeDetectorRef) { }
 
-  ngOnInit() {
+  ngOnInit = () => {
     this._auth.getUser().then(u => this.user = u);
-  }
-
-  user: object = {email: '', firstName: '', lastName: '', socials: {facebook: null, google: null, github: null}};
+  };
 
   save = () => this._auth.saveUser(this.user)
     .then(r => this._messages.showSuccess('User was successfully added', 'Social was added'))
       .catch(r => this._messages.showServerError('User was not added'));
 
-  addSocial = (provider: string) => {
-    this._auth.addSocial(provider).then(r => {
-      this._messages.showSuccess('Social network ' + provider + ' was successfully added', 'Social was added', 5000);
-      this.user['socials'][provider] = true;
-    });
-  };
+  addSocial = (provider: string) => this._auth.addSocial(provider).then(r => this.addSocialSuccess(provider));
+
+  private addSocialSuccess(provider) {
+    this._messages.showSuccess('Social network ' + provider + ' was successfully added', 'Social was added', 5000);
+    this.user['socials'][provider] = true;
+  }
 
 }

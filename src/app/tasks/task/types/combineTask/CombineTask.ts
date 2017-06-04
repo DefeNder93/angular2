@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import {ITask} from "../ITask";
+import {ITask} from '../ITask';
 
 @Component({
-  selector: 'combine-task',
+  selector: 'app-combine-task',
   template: '<p>combine task works!</p>',
   styleUrls: ['combineTask.component.scss']
 })
-export class CombineTask implements OnInit, ITask {
+export class CombineTaskComponent implements OnInit, ITask {
   id: string;
   name: string;
 

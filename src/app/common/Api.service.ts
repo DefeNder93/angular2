@@ -1,6 +1,6 @@
-import {Http} from "@angular/http";
-import {Injectable} from "@angular/core";
-import {Config} from "./Config.service";
+import {Http} from '@angular/http';
+import {Injectable} from '@angular/core';
+import {Config} from './Config.service';
 
 @Injectable()
 export class Api {

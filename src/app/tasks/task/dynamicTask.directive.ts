@@ -1,9 +1,9 @@
 import { Directive, ViewContainerRef } from '@angular/core';
 
 @Directive({
-  selector: '[dynamic-task]',
+  selector: '[appDynamicTask]',
 })
-export class DynamicTask {
+export class DynamicTaskDirective {
   constructor(public viewContainerRef: ViewContainerRef) { }
 }
 

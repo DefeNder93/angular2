@@ -2,9 +2,9 @@ import { TestBed, async } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 
 import { AppComponent } from './app.component';
-import {HttpModule} from "@angular/http";
-import {HeaderComponent} from "./header/header.component";
-import {MenubarModule} from "primeng/primeng";
+import {HttpModule} from '@angular/http';
+import {HeaderComponent} from './header/header.component';
+import {MenubarModule} from 'primeng/primeng';
 
 describe('AppComponent', () => {
   beforeEach(async(() => {

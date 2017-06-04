@@ -1,6 +1,3 @@
-/**
- *
- */
 export class TaskSet {
   name: string;
   description?: string;

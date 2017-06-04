@@ -3,7 +3,7 @@ import {
   BaseResponseOptions, BrowserXhr, Http, RequestOptions,
   ResponseOptions,
   XHRBackend, XSRFStrategy
-} from "@angular/http";
+} from '@angular/http';
 
 // HTTP configuration to use the http service outside of angular2
 export const HTTP_PROVIDERS = [

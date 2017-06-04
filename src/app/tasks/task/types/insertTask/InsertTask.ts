@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import {ITask} from "../ITask";
+import {ITask} from '../ITask';
 
 @Component({
-  selector: 'insert-task',
+  selector: 'app-insert-task',
   template: '<p>insert task works!</p>',
   styleUrls: ['insertTask.component.scss']
 })
-export class InsertTask implements OnInit, ITask {
+export class InsertTaskComponent implements OnInit, ITask {
   id: string;
   name: string;
 

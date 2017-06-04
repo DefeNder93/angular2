@@ -1,4 +1,4 @@
-import {AuthInfo} from "./AuthInfo";
+import {AuthInfo} from './AuthInfo';
 export interface IUser {
   name: string;
   email: string;

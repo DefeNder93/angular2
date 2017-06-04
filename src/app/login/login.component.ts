@@ -1,5 +1,5 @@
 import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
-import {Auth} from "../common/auth/Auth.service";
+import {Auth} from '../common/auth/Auth.service';
 
 @Component({
   selector: 'app-login',
@@ -20,13 +20,13 @@ import {Auth} from "../common/auth/Auth.service";
 })
 export class LoginComponent implements OnInit {
 
+  isLoggedIn = this._auth.isLoggedIn;
+  getCurrentProviderName = this._auth.getCurrentProviderName;
+
   constructor(private _auth: Auth, private changeDetectorRef: ChangeDetectorRef) { }
 
   ngOnInit() {
   }
-
-  isLoggedIn = this._auth.isLoggedIn;
-  getCurrentProviderName = this._auth.getCurrentProviderName;
 
   logout = () => {
     this._auth.logout();
@@ -37,7 +37,6 @@ export class LoginComponent implements OnInit {
     this._auth.login(provider).then(r => {
       this.changeDetectorRef.detectChanges();
     });
-
   };
 
   testAuth() {

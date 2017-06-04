@@ -1,20 +1,20 @@
 import { NgModule } from '@angular/core';
-import {TaskComponent} from "./task.component";
-import {CombineTask} from "./types/combineTask/CombineTask";
-import {InsertTask} from "./types/insertTask/InsertTask";
-import {DynamicTask} from "./dynamicTask.directive";
-import {PasswordModule} from "primeng/primeng";
+import {TaskComponent} from './task.component';
+import {CombineTaskComponent} from './types/combineTask/CombineTask';
+import {InsertTaskComponent} from './types/insertTask/InsertTask';
+import {DynamicTaskDirective} from './dynamicTask.directive';
+import {PasswordModule} from 'primeng/primeng';
 
 @NgModule({
   declarations: [
     TaskComponent,
-    CombineTask,
-    InsertTask,
-    DynamicTask
+    CombineTaskComponent,
+    InsertTaskComponent,
+    DynamicTaskDirective
   ],
   imports: [
     PasswordModule
   ],
-  entryComponents: [ CombineTask, InsertTask ],
+  entryComponents: [ CombineTaskComponent, InsertTaskComponent ],
 })
 export class TaskModule { }

@@ -1,4 +1,4 @@
-import {Injectable}              from '@angular/core';
+import {Injectable} from '@angular/core';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/toPromise';
@@ -7,14 +7,14 @@ import {Config} from '../Config.service';
 import {Api} from '../Api.service';
 import {Messages} from '../Messages.service';
 
-declare let hello: any;  // hello.js doesn't have updated typings file
+declare const hello: any;  // hello.js doesn't have updated typings file
 
 @Injectable()
 export class Auth {
 
-  constructor (private _config: Config, private _api: Api, private _messages: Messages) {}
-
   private user: object = null;
+
+  constructor (private _config: Config, private _api: Api, private _messages: Messages) {}
 
   testAuth = () => {
     return this._api.testAuth().then(r => console.log('secured auth: ' + r.text()))
@@ -30,12 +30,12 @@ export class Auth {
   logout = () => LocalStorage.set('auth', null);
 
   getCurrentProviderName = () => {
-    let auth = LocalStorage.get('auth');
+    const auth = LocalStorage.get('auth');
     return auth ? auth.provider : null;
   };
 
   authHandler = (auth, provider: string) => {
-    let socialToken = auth.authResponse.access_token;
+    const socialToken = auth.authResponse.access_token;
     return this._api.authSocial({
       network: provider,
       socialToken: socialToken
@@ -43,7 +43,7 @@ export class Auth {
   };
 
   addSocialHandler = (auth, provider: string, existingProvider: string, existingToken: string) => {
-    let socialToken = auth.authResponse.access_token;
+    const socialToken = auth.authResponse.access_token;
     return this._api.addSocial({
       network: provider,
       socialToken: socialToken,
@@ -55,30 +55,26 @@ export class Auth {
   login = (provider: string) => {
     return new Promise<string>((resolve, reject) => {
       hello(provider).login({force: true}).then(r => {
-        this.authHandler(r, provider).then(r => {
-            LocalStorage.set('auth', {token: r.text(), provider: provider});
+        this.authHandler(r, provider).then(token => {
+            LocalStorage.set('auth', {token: token.text(), provider: provider});
             resolve();
-          }).catch(r => this._messages.rejectWithError(reject, r, 'Social Auth Error'));
-      }, r => {
-        console.log(r);
-        this._messages.rejectWithError(reject, r, 'HelloJS Auth Error')
+          }).catch(e => this._messages.rejectWithError(reject, e, 'Social Auth Error'));
+      }, e => {
+        this._messages.rejectWithError(reject, e, 'HelloJS Auth Error')
       });
     });
   };
 
   addSocial = (provider: string) => {
-    let auth = LocalStorage.get('auth');
-    let existingToken = auth && auth.token;
-    let existingProvider = auth && auth.provider;
-    if (!this.checkParams(existingToken, existingProvider)) return;
+    const auth = LocalStorage.get('auth');
+    const existingToken = auth && auth.token;
+    const existingProvider = auth && auth.provider;
+    if (!this.checkParams(existingToken, existingProvider)) { return }
     return new Promise<string>((resolve, reject) => {
       hello(provider).login({force: true}).then(r => {
-        this.addSocialHandler(r, provider, existingProvider, existingToken).then(r => resolve()).catch(r =>
-          this._messages.rejectWithError(reject, r, 'Social Auth Error'));
-      }, r => {
-        console.log(r);
-        this._messages.rejectWithError(reject, r, 'HelloJS Auth Error');
-      });
+        this.addSocialHandler(r, provider, existingProvider, existingToken).then(s => resolve())
+          .catch(e => this._messages.rejectWithError(reject, r, 'Social Auth Error'));
+      }, r => this._messages.rejectWithError(reject, r, 'HelloJS Auth Error'));
     });
   };
 
@@ -100,7 +96,6 @@ export class Auth {
       facebook: facebookId,
       github: githubId
     }, {
-      //redirect_uri: 'redirect.html'
       oauth_proxy: 'https://auth-server.herokuapp.com/proxy'
     });
   }

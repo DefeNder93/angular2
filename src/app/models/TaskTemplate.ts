@@ -1,6 +1,3 @@
-/**
- *
- */
 export class TaskTemplate {
   name: string;
   title: string;
