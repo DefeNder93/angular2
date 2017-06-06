@@ -2,11 +2,11 @@ import {Injectable} from '@angular/core';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/toPromise';
-import {LocalStorage} from '../LocalStorage.service';
-import {Config} from '../Config.service';
-import {Api} from '../Api.service';
-import {Messages} from '../Messages.service';
-import {User} from '../../models/User';
+import {LocalStorage} from '../local-storage.service';
+import {Config} from '../config.service';
+import {Api} from '../api.service';
+import {Messages} from '../messages.service';
+import {User} from '../../models/user.model';
 
 declare const hello: any;  // hello.js doesn't have updated typings file
 

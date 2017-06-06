@@ -1,5 +1,5 @@
-import {IUser} from '../common/auth/IUser';
-import {Socials} from './Socials';
+import {IUser} from '../common/auth/user.interface';
+import {Socials} from './socials.model';
 
 export class User implements IUser {
   email: string;

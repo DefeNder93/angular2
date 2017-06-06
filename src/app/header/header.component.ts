@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {MenuItem} from 'primeng/primeng';
-import {Messages} from '../common/Messages.service';
+import {Messages} from '../common/messages.service';
 
 @Component({
   selector: 'app-header',

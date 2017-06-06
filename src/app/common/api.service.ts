@@ -1,7 +1,7 @@
 import {Http} from '@angular/http';
 import {Injectable} from '@angular/core';
-import {Config} from './Config.service';
-import {User} from '../models/User';
+import {Config} from './config.service';
+import {User} from '../models/user.model';
 
 @Injectable()
 export class Api {

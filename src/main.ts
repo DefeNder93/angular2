@@ -5,7 +5,7 @@ import {HTTP_PROVIDERS} from './http-providers-independent';
 
 import {AppModule} from './app/app.module';
 import {environment} from './environments/environment';
-import {Config} from './app/common/Config.service';
+import {Config} from './app/common/config.service';
 
 if (environment.production) {
   enableProdMode();

@@ -1,10 +1,10 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {Auth} from './common/auth/Auth.service';
-import {LocalStorage} from './common/LocalStorage.service';
-import {Api} from './common/Api.service';
+import {Auth} from './common/auth/auth.service';
+import {LocalStorage} from './common/local-storage.service';
+import {Api} from './common/api.service';
 import {Message} from 'primeng/primeng';
-import {Messages} from './common/Messages.service';
-import {Config} from './common/Config.service';
+import {Messages} from './common/messages.service';
+import {Config} from './common/config.service';
 import {AppConfig} from '../main';
 
 @Component({

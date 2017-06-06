@@ -6,7 +6,7 @@ import {HttpModule, Http, XHRBackend, RequestOptions} from '@angular/http';
 import {AppRoutingModule} from './routing.module';
 import {TestComponent} from './test/test.component';
 import {MenubarModule} from 'primeng/primeng';
-import {httpFactory} from './override/httpFactory';
+import {httpFactory} from './override/http-factory';
 import {HeaderComponent} from './header/header.component';
 import {LoginComponent} from './login/login.component';
 import {TaskModule} from './tasks/task/task.module';
