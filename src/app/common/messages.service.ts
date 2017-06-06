@@ -8,7 +8,7 @@ export class MessagesService {
   showMessage$: Observable<object>;
   private _observer: Observer<object>;
 
-  constructor () {
+  constructor() {
     this.showMessage$ = new Observable(observer => this._observer = observer);
   }
 

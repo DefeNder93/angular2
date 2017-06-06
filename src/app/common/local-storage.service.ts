@@ -3,7 +3,8 @@ import {Config} from './config.service';
 @Injectable()
 export class LocalStorage {
 
-  constructor(private _config: Config) {}
+  constructor(private _config: Config) {
+  }
 
   set = (key: string, item: any) => localStorage.setItem(this.getPrefix() + key, this.getItemAsString(item));
 

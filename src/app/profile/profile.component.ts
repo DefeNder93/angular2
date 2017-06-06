@@ -8,18 +8,20 @@ import {User} from '../models/user.model';
   template: `
     <div class="profile-form">
       <h3>Email:</h3>
-      <input type="text" size="30" pInputText [(ngModel)]="user.email" />
-      
+      <input type="text" size="30" pInputText [(ngModel)]="user.email"/>
+
       <h3>First Name:</h3>
-      <input type="text" size="30" pInputText [(ngModel)]="user.firstName" />
+      <input type="text" size="30" pInputText [(ngModel)]="user.firstName"/>
 
       <h3>Last Name:</h3>
-      <input type="text" size="30" pInputText [(ngModel)]="user.lastName" />
+      <input type="text" size="30" pInputText [(ngModel)]="user.lastName"/>
 
-      <p><button (click)="save()" type="button" pButton label="Save"></button></p>
+      <p>
+        <button (click)="save()" type="button" pButton label="Save"></button>
+      </p>
 
       <h3>Related Social Networks:</h3>
-      
+
       <p class="related-socials">
         <i (click)="addSocial('facebook')" [class.active]="user.socials.facebook" class="fa fa-facebook-square"></i>
         <i (click)="addSocial('github')" [class.active]="user.socials.github" class="fa fa-github"></i>
@@ -33,15 +35,16 @@ export class ProfileComponent implements OnInit {
 
   user: User = new User();
 
-  constructor(private _auth: AuthService, private _messages: MessagesService) { }
+  constructor(private _auth: AuthService, private _messages: MessagesService) {
+  }
 
-  ngOnInit () {
+  ngOnInit() {
     this._auth.getUser().then(u => this.user = u);
   };
 
   save = () => this._auth.saveUser(this.user)
     .then(r => this._messages.showSuccess('User was successfully added', 'Social was added'))
-      .catch(r => this._messages.showServerError('User was not added'));
+    .catch(r => this._messages.showServerError('User was not added'));
 
   addSocial = (provider: string) => this._auth.addSocial(provider).then(r => this.addSocialSuccess(provider));
 

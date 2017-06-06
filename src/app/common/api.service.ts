@@ -8,7 +8,7 @@ export class Api {
 
   private host: string;
 
-  constructor (private _http: Http, private _config: Config) {
+  constructor(private _http: Http, private _config: Config) {
     this.host = _config.get('HOST');
   }
 

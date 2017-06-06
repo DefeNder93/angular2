@@ -1,5 +1,4 @@
-import { Component, OnInit, ComponentFactoryResolver, ViewChild, AfterViewInit } from '@angular/core';
-import {CombineTaskComponent} from './types/combine-task/combine-task';
+import {Component, OnInit, ComponentFactoryResolver, ViewChild, AfterViewInit} from '@angular/core';
 import {DynamicTaskDirective} from './dynamic-task.directive';
 import {InsertTaskComponent} from './types/insert-task/insert-task';
 
@@ -14,7 +13,9 @@ export class TaskComponent implements AfterViewInit {
 
   // doc https://angular.io/docs/ts/latest/cookbook/dynamic-component-loader.html
   @ViewChild(DynamicTaskDirective) dynamicTask: DynamicTaskDirective;
-  constructor(private _componentFactoryResolver: ComponentFactoryResolver) { }
+
+  constructor(private _componentFactoryResolver: ComponentFactoryResolver) {
+  }
 
   ngAfterViewInit() {
     this.loadComponent();

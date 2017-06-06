@@ -15,7 +15,8 @@ export class AuthService {
 
   private user: User = null;
 
-  constructor (private _config: Config, private _api: Api, private _messages: MessagesService, private _localStorage: LocalStorage) {}
+  constructor(private _config: Config, private _api: Api, private _messages: MessagesService, private _localStorage: LocalStorage) {
+  }
 
   testAuth = () => {
     return this._api.testAuth().then(r => console.log('secured auth: ' + r.text()))
@@ -57,11 +58,11 @@ export class AuthService {
     return new Promise<string>((resolve, reject) => {
       hello(provider).login({force: true}).then(r => {
         this.authHandler(r, provider).then(token => {
-            this._localStorage.set('auth', {token: token.text(), provider: provider});
-            resolve();
-          }).catch(e => this._messages.rejectWithError(reject, e, 'Social Auth Error'));
+          this._localStorage.set('auth', {token: token.text(), provider: provider});
+          resolve();
+        }).catch(e => this._messages.rejectWithError(reject, e, 'Social Auth Error'));
       }, e => {
-        this._messages.rejectWithError(reject, e, 'HelloJS Auth Error')
+        this._messages.rejectWithError(reject, e, 'HelloJS Auth Error');
       });
     });
   };
@@ -70,7 +71,9 @@ export class AuthService {
     const auth = this._localStorage.get('auth');
     const existingToken = auth && auth.token;
     const existingProvider = auth && auth.provider;
-    if (!this.checkParams(existingToken, existingProvider)) { return }
+    if (!this.checkParams(existingToken, existingProvider)) {
+      return;
+    }
     return new Promise<string>((resolve, reject) => {
       hello(provider).login({force: true}).then(r => {
         this.addSocialHandler(r, provider, existingProvider, existingToken).then(s => resolve())
@@ -88,7 +91,7 @@ export class AuthService {
 
   init = () => {
     this.initHello(this._config.get('GOOGLE_CLIENT_ID'), this._config.get('FACEBOOK_CLIENT_ID'), this._config.get('GITHUB_CLIENT_ID'));
-    this.isLoggedIn() && this._api.getUser().then( r => this.user = r.json());
+    this.isLoggedIn() && this._api.getUser().then(r => this.user = r.json());
   };
 
   private initHello = (googleId: string, facebookId: string, githubId: string) => {
@@ -99,5 +102,5 @@ export class AuthService {
     }, {
       oauth_proxy: this._config.get('OAUTH_PROXY') || 'https://auth-server.herokuapp.com/proxy'
     });
-  }
+  };
 }

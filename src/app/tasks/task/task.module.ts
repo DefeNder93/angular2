@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import {NgModule} from '@angular/core';
 import {TaskComponent} from './task.component';
 import {CombineTaskComponent} from './types/combine-task/combine-task';
 import {InsertTaskComponent} from './types/insert-task/insert-task';
@@ -15,6 +15,7 @@ import {PasswordModule} from 'primeng/primeng';
   imports: [
     PasswordModule
   ],
-  entryComponents: [ CombineTaskComponent, InsertTaskComponent ],
+  entryComponents: [CombineTaskComponent, InsertTaskComponent],
 })
-export class TaskModule { }
+export class TaskModule {
+}

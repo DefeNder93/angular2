@@ -23,9 +23,11 @@ export class LoginComponent implements OnInit {
   isLoggedIn = this._auth.isLoggedIn;
   getCurrentProviderName = this._auth.getCurrentProviderName;
 
-  constructor(private _auth: AuthService, private changeDetectorRef: ChangeDetectorRef) { }
+  constructor(private _auth: AuthService, private changeDetectorRef: ChangeDetectorRef) {
+  }
 
-  ngOnInit() {}
+  ngOnInit() {
+  }
 
   logout = () => {
     this._auth.logout();

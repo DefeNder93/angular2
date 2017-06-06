@@ -13,7 +13,7 @@ if (environment.production) {
 }
 
 function deferredBootstrap() {
-  initConfig().then(function(){
+  initConfig().then(function () {
     platformBrowserDynamic().bootstrapModule(AppModule);
   });
 }

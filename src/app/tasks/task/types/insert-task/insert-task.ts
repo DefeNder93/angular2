@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {ITask} from '../task.interface';
 
 @Component({
@@ -10,7 +10,8 @@ export class InsertTaskComponent implements OnInit, ITask {
   id: string;
   name: string;
 
-  constructor() { }
+  constructor() {
+  }
 
   ngOnInit() {
     this.id = 'tasks.Insert';

@@ -1,4 +1,4 @@
-import { ConnectionBackend, RequestOptions, Request, RequestOptionsArgs, Response, Http, Headers} from '@angular/http';
+import {ConnectionBackend, RequestOptions, Request, RequestOptionsArgs, Response, Http, Headers} from '@angular/http';
 import {Observable} from 'rxjs/Rx';
 import {LocalStorage} from '../common/local-storage.service';
 import {ReflectiveInjector} from '@angular/core';
