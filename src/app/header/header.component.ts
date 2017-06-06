@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {MenuItem} from 'primeng/primeng';
-import {Messages} from '../common/messages.service';
+import {MessagesService} from '../common/messages.service';
 
 @Component({
   selector: 'app-header',
@@ -11,7 +11,7 @@ export class HeaderComponent implements OnInit {
 
   private items: MenuItem[];
 
-  constructor(private _messages: Messages) { }
+  constructor(private _messages: MessagesService) { }
 
   ngOnInit() {
     this.items = [

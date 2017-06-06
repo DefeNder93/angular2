@@ -5,21 +5,21 @@ import 'rxjs/add/operator/toPromise';
 import {LocalStorage} from '../local-storage.service';
 import {Config} from '../config.service';
 import {Api} from '../api.service';
-import {Messages} from '../messages.service';
+import {MessagesService} from '../messages.service';
 import {User} from '../../models/user.model';
 
 declare const hello: any;  // hello.js doesn't have updated typings file
 
 @Injectable()
-export class Auth {
+export class AuthService {
 
   private user: User = null;
 
-  constructor (private _config: Config, private _api: Api, private _messages: Messages, private _localStorage: LocalStorage) {}
+  constructor (private _config: Config, private _api: Api, private _messages: MessagesService, private _localStorage: LocalStorage) {}
 
   testAuth = () => {
     return this._api.testAuth().then(r => console.log('secured auth: ' + r.text()))
-      .catch(r => this._messages.showError(r, 'Secured Auth Error'));
+      .catch(r => this._messages.showError(r, 'Secured AuthService Error'));
   };
 
   getUser = () => this.user ? Promise.resolve(this.user) : this._api.getUser().then(r => r.json());
@@ -59,9 +59,9 @@ export class Auth {
         this.authHandler(r, provider).then(token => {
             this._localStorage.set('auth', {token: token.text(), provider: provider});
             resolve();
-          }).catch(e => this._messages.rejectWithError(reject, e, 'Social Auth Error'));
+          }).catch(e => this._messages.rejectWithError(reject, e, 'Social AuthService Error'));
       }, e => {
-        this._messages.rejectWithError(reject, e, 'HelloJS Auth Error')
+        this._messages.rejectWithError(reject, e, 'HelloJS AuthService Error')
       });
     });
   };
@@ -74,8 +74,8 @@ export class Auth {
     return new Promise<string>((resolve, reject) => {
       hello(provider).login({force: true}).then(r => {
         this.addSocialHandler(r, provider, existingProvider, existingToken).then(s => resolve())
-          .catch(e => this._messages.rejectWithError(reject, r, 'Social Auth Error'));
-      }, r => this._messages.rejectWithError(reject, r, 'HelloJS Auth Error'));
+          .catch(e => this._messages.rejectWithError(reject, r, 'Social AuthService Error'));
+      }, r => this._messages.rejectWithError(reject, r, 'HelloJS AuthService Error'));
     });
   };
 
@@ -97,7 +97,7 @@ export class Auth {
       facebook: facebookId,
       github: githubId
     }, {
-      oauth_proxy: 'https://auth-server.herokuapp.com/proxy'
+      oauth_proxy: this._config.get('OAUTH_PROXY') || 'https://auth-server.herokuapp.com/proxy'
     });
   }
 }

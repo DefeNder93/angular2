@@ -3,7 +3,7 @@ import {Observable} from 'rxjs/Observable';
 import {Observer} from 'rxjs/Observer';
 
 @Injectable()
-export class Messages {
+export class MessagesService {
 
   showMessage$: Observable<object>;
   private _observer: Observer<object>;

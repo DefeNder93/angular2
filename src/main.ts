@@ -6,6 +6,7 @@ import {HTTP_PROVIDERS} from './http-providers-independent';
 import {AppModule} from './app/app.module';
 import {environment} from './environments/environment';
 import {Config} from './app/common/config.service';
+import {Logger} from './app/common/logger';
 
 if (environment.production) {
   enableProdMode();
@@ -25,7 +26,8 @@ function initConfig() {
     .then(r => {
       config.init(r.json());
       AppConfig.config = config;
-    }).catch(r => console.log('Bootstrap error', r));
+      // throw new Error('123');
+    }).catch(r => Logger.error('Bootstrap error', r));
 }
 deferredBootstrap();
 

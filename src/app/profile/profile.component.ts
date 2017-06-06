@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
-import {Auth} from '../common/auth/auth.service';
-import {Messages} from '../common/messages.service';
+import {AuthService} from '../common/auth/auth.service';
+import {MessagesService} from '../common/messages.service';
 import {User} from '../models/user.model';
 
 @Component({
@@ -33,7 +33,7 @@ export class ProfileComponent implements OnInit {
 
   user: User = new User();
 
-  constructor(private _auth: Auth, private _messages: Messages) { }
+  constructor(private _auth: AuthService, private _messages: MessagesService) { }
 
   ngOnInit () {
     this._auth.getUser().then(u => this.user = u);

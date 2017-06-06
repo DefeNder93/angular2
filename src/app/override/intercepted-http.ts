@@ -42,7 +42,7 @@ export class InterceptedHttp extends Http {
       .get(LocalStorage);
     const auth = _localStorage.get('auth');
     if (auth) {
-      options.headers.append('Auth', auth.token);
+      options.headers.append('AuthService', auth.token);
     }
 
     return options;

@@ -4,7 +4,7 @@ import {ITask} from '../task.interface';
 @Component({
   selector: 'app-combine-task',
   template: '<p>combine task works!</p>',
-  styleUrls: ['src/app/tasks/task/types/combineTask/combine-task.component.scss']
+  styleUrls: ['combine-task.component.scss']
 })
 export class CombineTaskComponent implements OnInit, ITask {
   id: string;

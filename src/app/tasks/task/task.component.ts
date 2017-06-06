@@ -1,7 +1,7 @@
 import { Component, OnInit, ComponentFactoryResolver, ViewChild, AfterViewInit } from '@angular/core';
-import {CombineTaskComponent} from './types/combineTask/combine-task';
+import {CombineTaskComponent} from './types/combine-task/combine-task';
 import {DynamicTaskDirective} from './dynamic-task.directive';
-import {InsertTaskComponent} from './types/insertTask/insert-task';
+import {InsertTaskComponent} from './types/insert-task/insert-task';
 
 @Component({
   selector: 'app-task',
