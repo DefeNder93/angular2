@@ -19,7 +19,7 @@ export class AuthService {
 
   testAuth = () => {
     return this._api.testAuth().then(r => console.log('secured auth: ' + r.text()))
-      .catch(r => this._messages.showError(r, 'Secured AuthService Error'));
+      .catch(r => this._messages.showError(r, 'Secured Auth Error'));
   };
 
   getUser = () => this.user ? Promise.resolve(this.user) : this._api.getUser().then(r => r.json());
@@ -59,9 +59,9 @@ export class AuthService {
         this.authHandler(r, provider).then(token => {
             this._localStorage.set('auth', {token: token.text(), provider: provider});
             resolve();
-          }).catch(e => this._messages.rejectWithError(reject, e, 'Social AuthService Error'));
+          }).catch(e => this._messages.rejectWithError(reject, e, 'Social Auth Error'));
       }, e => {
-        this._messages.rejectWithError(reject, e, 'HelloJS AuthService Error')
+        this._messages.rejectWithError(reject, e, 'HelloJS Auth Error')
       });
     });
   };
@@ -74,8 +74,8 @@ export class AuthService {
     return new Promise<string>((resolve, reject) => {
       hello(provider).login({force: true}).then(r => {
         this.addSocialHandler(r, provider, existingProvider, existingToken).then(s => resolve())
-          .catch(e => this._messages.rejectWithError(reject, r, 'Social AuthService Error'));
-      }, r => this._messages.rejectWithError(reject, r, 'HelloJS AuthService Error'));
+          .catch(e => this._messages.rejectWithError(reject, r, 'Social Auth Error'));
+      }, r => this._messages.rejectWithError(reject, r, 'HelloJS Auth Error'));
     });
   };
 
