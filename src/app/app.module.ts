@@ -15,6 +15,7 @@ import {GrowlModule} from 'primeng/primeng';
 import {ProfileComponent} from './profile/profile.component';
 import {InputTextModule} from 'primeng/primeng';
 import {AppComponent} from './app.component';
+import {SharedModule} from './shared/shared.module';
 
 @NgModule({
   declarations: [
@@ -28,12 +29,14 @@ import {AppComponent} from './app.component';
     BrowserModule,
     FormsModule,
     HttpModule,
-    AppRoutingModule,
-    TaskModule,
     MenubarModule,
     ButtonModule,
     GrowlModule,
-    InputTextModule
+    InputTextModule,
+
+    AppRoutingModule,
+    TaskModule,
+    SharedModule
   ],
   providers: [
     {

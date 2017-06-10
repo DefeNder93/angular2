@@ -1,17 +1,12 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {AuthService} from './shared/auth/auth.service';
-import {LocalStorage} from './shared/local-storage.service';
-import {Api} from './shared/api.service';
 import {Message} from 'primeng/primeng';
 import {MessagesService} from './shared/messages.service';
-import {Config} from './shared/config.service';
-import {AppConfig} from '../main';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['app.component.scss'],
-  providers: [Api, AuthService, LocalStorage, MessagesService, LocalStorage, {provide: Config, useFactory: () => AppConfig.config}]
+  styleUrls: ['app.component.scss']
 })
 export class AppComponent implements OnDestroy, OnInit {
 
