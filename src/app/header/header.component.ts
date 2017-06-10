@@ -11,7 +11,7 @@ export class HeaderComponent implements OnInit {
 
   private items: MenuItem[];
 
-  constructor(private _messages: MessagesService) {
+  constructor() {
   }
 
   ngOnInit() {

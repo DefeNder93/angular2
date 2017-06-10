@@ -3,14 +3,14 @@ import {Config} from './config.service';
 @Injectable()
 export class LocalStorage {
 
-  constructor(private _config: Config) {
+  constructor(private config: Config) {
   }
 
   set = (key: string, item: any) => localStorage.setItem(this.getPrefix() + key, this.getItemAsString(item));
 
   get = (key: string): any => this.getItemFromString(localStorage.getItem(this.getPrefix() + key));
 
-  private getPrefix = () => this._config.get('LOCAL_STORAGE_PREFIX') || 'app_';
+  private getPrefix = () => this.config.get('LOCAL_STORAGE_PREFIX') || 'app_';
 
   private getItemAsString = (item: any) => item !== null && typeof item === 'object' ? JSON.stringify(item) : item;
 

@@ -19,12 +19,12 @@ export class AppComponent implements OnDestroy, OnInit {
   life = 10000;
   messages: Message[] = [];
 
-  constructor(private _auth: AuthService, private _messages: MessagesService) {}
+  constructor(private authService: AuthService, private messagesService: MessagesService) {}
 
   ngOnInit() {
-    this._auth.init();
+    this.authService.init();
     this.messages = [];
-    this.subscription = this._messages.showMessage$.subscribe(messageConfig => this.showMessage(messageConfig));
+    this.subscription = this.messagesService.showMessage$.subscribe(messageConfig => this.showMessage(messageConfig));
   }
 
   private showMessage(config: object) {

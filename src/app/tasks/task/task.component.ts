@@ -14,7 +14,7 @@ export class TaskComponent implements AfterViewInit {
   // doc https://angular.io/docs/ts/latest/cookbook/dynamic-component-loader.html
   @ViewChild(DynamicTaskDirective) dynamicTask: DynamicTaskDirective;
 
-  constructor(private _componentFactoryResolver: ComponentFactoryResolver) {
+  constructor(private componentFactoryResolver: ComponentFactoryResolver) {
   }
 
   ngAfterViewInit() {
@@ -22,7 +22,7 @@ export class TaskComponent implements AfterViewInit {
   }
 
   loadComponent() {
-    const componentFactory = this._componentFactoryResolver.resolveComponentFactory(InsertTaskComponent);
+    const componentFactory = this.componentFactoryResolver.resolveComponentFactory(InsertTaskComponent);
     // let componentFactory = this._componentFactoryResolver.resolveComponentFactory(CombineTask);
     const viewContainerRef = this.dynamicTask.viewContainerRef;
     viewContainerRef.clear();

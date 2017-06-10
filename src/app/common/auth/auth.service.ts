@@ -15,30 +15,30 @@ export class AuthService {
 
   private user: User = null;
 
-  constructor(private _config: Config, private _api: Api, private _messages: MessagesService, private _localStorage: LocalStorage) {
+  constructor(private config: Config, private api: Api, private messagesService: MessagesService, private localStorage: LocalStorage) {
   }
 
   testAuth = () => {
-    return this._api.testAuth().then(r => console.log('secured auth: ' + r.text()))
-      .catch(r => this._messages.showError(r, 'Secured Auth Error'));
+    return this.api.testAuth().then(r => console.log('secured auth: ' + r.text()))
+      .catch(r => this.messagesService.showError(r, 'Secured Auth Error'));
   };
 
-  getUser = () => this.user ? Promise.resolve(this.user) : this._api.getUser().then(r => r.json());
+  getUser = () => this.user ? Promise.resolve(this.user) : this.api.getUser().then(r => r.json());
 
-  saveUser = (user: User) => this._api.updateUser(user);
+  saveUser = (user: User) => this.api.updateUser(user);
 
-  isLoggedIn = () => this._localStorage.get('auth') !== null;
+  isLoggedIn = () => this.localStorage.get('auth') !== null;
 
-  logout = () => this._localStorage.set('auth', null);
+  logout = () => this.localStorage.set('auth', null);
 
   getCurrentProviderName = () => {
-    const auth = this._localStorage.get('auth');
+    const auth = this.localStorage.get('auth');
     return auth ? auth.provider : null;
   };
 
   authHandler = (auth, provider: string) => {
     const socialToken = auth.authResponse.access_token;
-    return this._api.authSocial({
+    return this.api.authSocial({
       network: provider,
       socialToken: socialToken
     });
@@ -46,7 +46,7 @@ export class AuthService {
 
   addSocialHandler = (auth, provider: string, existingProvider: string, existingToken: string) => {
     const socialToken = auth.authResponse.access_token;
-    return this._api.addSocial({
+    return this.api.addSocial({
       network: provider,
       socialToken: socialToken,
       existingToken: existingToken,
@@ -58,17 +58,17 @@ export class AuthService {
     return new Promise<string>((resolve, reject) => {
       hello(provider).login({force: true}).then(r => {
         this.authHandler(r, provider).then(token => {
-          this._localStorage.set('auth', {token: token.text(), provider: provider});
+          this.localStorage.set('auth', {token: token.text(), provider: provider});
           resolve();
-        }).catch(e => this._messages.rejectWithError(reject, e, 'Social Auth Error'));
+        }).catch(e => this.messagesService.rejectWithError(reject, e, 'Social Auth Error'));
       }, e => {
-        this._messages.rejectWithError(reject, e, 'HelloJS Auth Error');
+        this.messagesService.rejectWithError(reject, e, 'HelloJS Auth Error');
       });
     });
   };
 
   addSocial = (provider: string) => {
-    const auth = this._localStorage.get('auth');
+    const auth = this.localStorage.get('auth');
     const existingToken = auth && auth.token;
     const existingProvider = auth && auth.provider;
     if (!this.checkParams(existingToken, existingProvider)) {
@@ -77,21 +77,21 @@ export class AuthService {
     return new Promise<string>((resolve, reject) => {
       hello(provider).login({force: true}).then(r => {
         this.addSocialHandler(r, provider, existingProvider, existingToken).then(s => resolve())
-          .catch(e => this._messages.rejectWithError(reject, r, 'Social Auth Error'));
-      }, r => this._messages.rejectWithError(reject, r, 'HelloJS Auth Error'));
+          .catch(e => this.messagesService.rejectWithError(reject, r, 'Social Auth Error'));
+      }, r => this.messagesService.rejectWithError(reject, r, 'HelloJS Auth Error'));
     });
   };
 
   private checkParams = (existingToken, existingProvider) => {
     if (!existingToken || !existingProvider) {
-      this._messages.showError('You should have at least one network');
+      this.messagesService.showError('You should have at least one network');
     }
     return existingToken || existingProvider;
   };
 
   init = () => {
-    this.initHello(this._config.get('GOOGLE_CLIENT_ID'), this._config.get('FACEBOOK_CLIENT_ID'), this._config.get('GITHUB_CLIENT_ID'));
-    this.isLoggedIn() && this._api.getUser().then(r => this.user = r.json());
+    this.initHello(this.config.get('GOOGLE_CLIENT_ID'), this.config.get('FACEBOOK_CLIENT_ID'), this.config.get('GITHUB_CLIENT_ID'));
+    this.isLoggedIn() && this.api.getUser().then(r => this.user = r.json());
   };
 
   private initHello = (googleId: string, facebookId: string, githubId: string) => {
@@ -100,7 +100,7 @@ export class AuthService {
       facebook: facebookId,
       github: githubId
     }, {
-      oauth_proxy: this._config.get('OAUTH_PROXY') || 'https://auth-server.herokuapp.com/proxy'
+      oauth_proxy: this.config.get('OAUTH_PROXY') || 'https://auth-server.herokuapp.com/proxy'
     });
   };
 }

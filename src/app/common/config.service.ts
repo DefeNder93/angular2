@@ -1,8 +1,8 @@
 export class Config {
 
-  private _config: Object;
+  private config: Object;
 
-  get = (key?: string): string => this._config[key];
+  get = (key?: string): string => this.config[key];
 
-  init = (config: object) => this._config = config;
+  init = (config: object) => this.config = config;
 }

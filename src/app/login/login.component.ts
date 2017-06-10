@@ -20,28 +20,28 @@ import {AuthService} from '../common/auth/auth.service';
 })
 export class LoginComponent implements OnInit {
 
-  isLoggedIn = this._auth.isLoggedIn;
-  getCurrentProviderName = this._auth.getCurrentProviderName;
+  isLoggedIn = this.authService.isLoggedIn;
+  getCurrentProviderName = this.authService.getCurrentProviderName;
 
-  constructor(private _auth: AuthService, private changeDetectorRef: ChangeDetectorRef) {
+  constructor(private authService: AuthService, private changeDetectorRef: ChangeDetectorRef) {
   }
 
   ngOnInit() {
   }
 
   logout = () => {
-    this._auth.logout();
+    this.authService.logout();
     this.changeDetectorRef.detectChanges();
   };
 
   login = (provider: string) => {
-    this._auth.login(provider).then(r => {
+    this.authService.login(provider).then(r => {
       this.changeDetectorRef.detectChanges();
     });
   };
 
   testAuth() {
-    this._auth.testAuth();
+    this.authService.testAuth();
   }
 
 }
