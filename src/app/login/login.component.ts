@@ -1,5 +1,5 @@
 import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
-import {AuthService} from '../common/auth/auth.service';
+import {AuthService} from '../shared/auth/auth.service';
 
 @Component({
   selector: 'app-login',

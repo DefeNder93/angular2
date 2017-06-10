@@ -1,3 +1,6 @@
+/**
+ * Config service, injectable, see app.component.ts
+ */
 export class Config {
 
   private config: Object;

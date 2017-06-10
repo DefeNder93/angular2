@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
-import {AuthService} from '../common/auth/auth.service';
-import {MessagesService} from '../common/messages.service';
-import {User} from '../models/user.model';
+import {AuthService} from '../shared/auth/auth.service';
+import {MessagesService} from '../shared/messages.service';
+import {User} from '../shared/auth/user.model';
 
 @Component({
   selector: 'app-profile',

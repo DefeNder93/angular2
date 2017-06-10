@@ -5,8 +5,8 @@ import {HTTP_PROVIDERS} from './http-providers-independent';
 
 import {AppModule} from './app/app.module';
 import {environment} from './environments/environment';
-import {Config} from './app/common/config.service';
-import {Logger} from './app/common/logger';
+import {Config} from './app/shared/config.service';
+import {Logger} from './app/shared/logger';
 
 if (environment.production) {
   enableProdMode();

@@ -6,7 +6,7 @@ import {LocalStorage} from '../local-storage.service';
 import {Config} from '../config.service';
 import {Api} from '../api.service';
 import {MessagesService} from '../messages.service';
-import {User} from '../../models/user.model';
+import {User} from './user.model';
 
 declare const hello: any;  // hello.js doesn't have updated typings file
 
