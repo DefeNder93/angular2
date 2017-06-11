@@ -4,7 +4,6 @@ import {FormsModule} from '@angular/forms';
 import {HttpModule, Http, XHRBackend, RequestOptions} from '@angular/http';
 
 import {AppRoutingModule} from './routing.module';
-import {TestComponent} from './test/test.component';
 import {MenubarModule} from 'primeng/primeng';
 import {httpFactory} from './override/http-factory';
 import {HeaderComponent} from './header/header.component';
@@ -21,7 +20,6 @@ import {CoreModule} from './core/core.module';
   declarations: [
     LoginComponent,
     AppComponent,
-    TestComponent,
     HeaderComponent,
     ProfileComponent
   ],
