@@ -1,7 +1,7 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {AuthService} from './shared/auth/auth.service';
+import {AuthService} from './core/auth/auth.service';
 import {Message} from 'primeng/primeng';
-import {MessagesService} from './shared/messages.service';
+import {MessagesService} from './core/messages.service';
 
 @Component({
   selector: 'app-root',

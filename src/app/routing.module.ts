@@ -11,6 +11,7 @@ const routes: Routes = [
   {path: 'task/:id', component: TaskComponent},
   {path: 'login', component: LoginComponent},
   {path: 'profile', component: ProfileComponent},
+  {path: 'lazy', loadChildren: './lazy/lazy.module#LazyModule' }
 ];
 
 @NgModule({

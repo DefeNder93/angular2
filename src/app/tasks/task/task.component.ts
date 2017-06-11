@@ -1,4 +1,4 @@
-import {Component, OnInit, ComponentFactoryResolver, ViewChild, AfterViewInit} from '@angular/core';
+import {Component, ComponentFactoryResolver, ViewChild, AfterViewInit} from '@angular/core';
 import {DynamicTaskDirective} from './dynamic-task.directive';
 import {InsertTaskComponent} from './types/insert-task/insert-task';
 

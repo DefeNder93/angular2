@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {MenuItem} from 'primeng/primeng';
-import {MessagesService} from '../shared/messages.service';
+import {MessagesService} from '../core/messages.service';
 
 @Component({
   selector: 'app-header',
@@ -27,6 +27,10 @@ export class HeaderComponent implements OnInit {
       {
         label: 'Profile',
         routerLink: ['/profile']
+      },
+      {
+        label: 'Lazy',
+        routerLink: ['/lazy']
       }
     ];
   }

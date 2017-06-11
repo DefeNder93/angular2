@@ -1,8 +1,8 @@
 import {ConnectionBackend, RequestOptions, Request, RequestOptionsArgs, Response, Http, Headers} from '@angular/http';
 import {Observable} from 'rxjs/Rx';
-import {LocalStorage} from '../shared/local-storage.service';
+import {LocalStorage} from '../core/local-storage.service';
 import {ReflectiveInjector} from '@angular/core';
-import {Config} from '../shared/config.service';
+import {Config} from '../core/config.service';
 import {AppConfig} from '../../main';
 
 export class InterceptedHttp extends Http {
