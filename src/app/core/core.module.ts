@@ -8,7 +8,7 @@ import {AppConfig} from '../../main';
 
 @NgModule({
   providers: [
-    {provide: Config, useFactory: () => AppConfig.config},
+    {provide: Config, useFactory() { return AppConfig.config }},
     MessagesService,
     LocalStorage,
     Api,
