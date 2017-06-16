@@ -4,7 +4,13 @@ import {RouterTestingModule} from '@angular/router/testing';
 import {AppComponent} from './app.component';
 import {HttpModule} from '@angular/http';
 import {HeaderComponent} from './header/header.component';
-import {MenubarModule} from 'primeng/primeng';
+import {GrowlModule, MenubarModule} from 'primeng/primeng';
+import {AuthService} from './core/auth/auth.service';
+import {MessagesService} from './core/messages.service';
+import {Config} from './core/config.service';
+import {Api} from './core/api.service';
+import {AppConfig} from '../main';
+import {LocalStorage} from './core/local-storage.service';
 
 describe('AppComponent', () => {
   beforeEach(async(() => {
@@ -13,10 +19,18 @@ describe('AppComponent', () => {
         AppComponent,
         HeaderComponent
       ],
+      providers: [
+        AuthService,
+        MessagesService,
+        {provide: Config, useFactory: () => AppConfig.config},
+        Api,
+        LocalStorage
+      ],
       imports: [
         RouterTestingModule,
         HttpModule,
-        MenubarModule
+        MenubarModule,
+        GrowlModule
       ]
     }).compileComponents();
   }));
@@ -26,4 +40,6 @@ describe('AppComponent', () => {
     const app = fixture.debugElement.componentInstance;
     expect(app).toBeTruthy();
   }));
+
+  
 });
