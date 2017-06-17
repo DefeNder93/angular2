@@ -13,15 +13,20 @@ import {AppConfig} from '../main';
 import {LocalStorage} from './core/local-storage.service';
 
 describe('AppComponent', () => {
+  let fixture, comp, call;
   beforeEach(async(() => {
+    call = {};
+    const authServiceMock = {
+      init: () => {call['authInit'] = true}
+    };
     TestBed.configureTestingModule({
       declarations: [
         AppComponent,
         HeaderComponent
       ],
       providers: [
-        AuthService,
         MessagesService,
+        {provide: AuthService, useValue: authServiceMock},
         {provide: Config, useFactory: () => AppConfig.config},
         Api,
         LocalStorage
@@ -35,11 +40,19 @@ describe('AppComponent', () => {
     }).compileComponents();
   }));
 
+  beforeEach(() => {
+    fixture = TestBed.createComponent(AppComponent);
+    comp = fixture.componentInstance;
+  });
+
   it('should create the app', async(() => {
-    const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.debugElement.componentInstance;
     expect(app).toBeTruthy();
   }));
 
-  
+  it('should init app module (messages and auth service)', async(() => {
+    fixture.detectChanges();
+    expect(comp.messages).toEqual([]);
+    expect(call['authInit']).toBeTruthy();
+  }));
 });
