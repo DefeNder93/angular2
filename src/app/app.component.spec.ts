@@ -14,6 +14,7 @@ import {LocalStorage} from './core/local-storage.service';
 
 describe('AppComponent', () => {
   let fixture, comp, call;
+
   beforeEach(async(() => {
     call = {};
     const authServiceMock = {
@@ -48,11 +49,36 @@ describe('AppComponent', () => {
   it('should create the app', async(() => {
     const app = fixture.debugElement.componentInstance;
     expect(app).toBeTruthy();
+    expect(comp.life).toBeDefined();
+    expect(comp.messages).toEqual([]);
   }));
 
   it('should init app module (messages and auth service)', async(() => {
+    const messagesService = fixture.debugElement.injector.get(MessagesService);
+    const authService = fixture.debugElement.injector.get(AuthService);
+    const subscribeSpy = spyOn(messagesService.showMessage$, 'subscribe');
+    spyOn(authService, 'init');
     fixture.detectChanges();
-    expect(comp.messages).toEqual([]);
-    expect(call['authInit']).toBeTruthy();
+    expect(authService.init).toHaveBeenCalled();
+    expect(messagesService.showMessage$.subscribe).toHaveBeenCalled();
+    expect(subscribeSpy.calls.mostRecent().args.length).toBe(1);
+
+    spyOn(comp, 'showMessage');
+    subscribeSpy.calls.mostRecent().args[0]({life: 42});
+    expect(comp.showMessage).toHaveBeenCalledWith({life: 42});
+  }));
+
+  it('should show message', async(() => {
+    // TODO test showMessage
+    // comp.showMessage
+  }));
+
+  // TODO test template
+
+  it('should remove subscription', async(() => {
+    comp.subscription = {unsubscribe: () => {}};
+    spyOn(comp.subscription, 'unsubscribe');
+    comp.ngOnDestroy();
+    expect(comp.subscription.unsubscribe).toHaveBeenCalled();
   }));
 });

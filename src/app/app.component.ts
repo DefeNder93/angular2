@@ -18,7 +18,6 @@ export class AppComponent implements OnDestroy, OnInit {
 
   ngOnInit() {
     this.authService.init();
-    this.messages = [];
     this.subscription = this.messagesService.showMessage$.subscribe(messageConfig => this.showMessage(messageConfig));
   }
 
