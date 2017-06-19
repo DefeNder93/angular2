@@ -54,7 +54,7 @@ describe('AppComponent', () => {
     expect(comp.messages).toEqual([]);
   }));
 
-  it('should init app module (messages and auth service)', async(() => {
+  it('should init app module (messages and auth service)', () => {
     const messagesService = fixture.debugElement.injector.get(MessagesService);
     const authService = fixture.debugElement.injector.get(AuthService);
     const subscribeSpy = spyOn(messagesService.showMessage$, 'subscribe');
@@ -67,22 +67,22 @@ describe('AppComponent', () => {
     spyOn(comp, 'showMessage');
     subscribeSpy.calls.mostRecent().args[0]({life: 42});
     expect(comp.showMessage).toHaveBeenCalledWith({life: 42});
-  }));
+  });
 
-  it('should show message', async(() => {
+  it('should show message', () => {
     const config = {life: 41};
     comp.showMessage(config);
     expect(comp.life).toBe(41);
     expect(comp.messages).toEqual([{life: 41}]);
-  }));
+  });
 
-  it('should remove subscription', async(() => {
+  it('should remove subscription', () => {
     testHelper.destroyUnsubscribe();
-  }));
+  });
 
-  it('template should have messages, header and router outlet', async(() => {
+  it('template should have messages, header and router outlet', () => {
     testHelper.existsByCss('app-header');
     testHelper.existsByCss('router-outlet');
     testHelper.existsByCss('p-growl');
-  }))
+  })
 });

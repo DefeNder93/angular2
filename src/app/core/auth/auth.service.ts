@@ -23,9 +23,7 @@ export class AuthService {
       .catch(r => this.messagesService.showError(r, 'Secured Auth Error'));
   };
 
-  getUser = () => this.user ? Promise.resolve(this.user) : this.api.getUser().then(
-    r => this.user = r.json()
-  );
+  getUser = () => this.user ? Promise.resolve(this.user) : this.api.getUser().then(r => this.user = r.json());
 
   saveUser = (user: User) => this.api.updateUser(user);
 
