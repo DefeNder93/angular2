@@ -11,9 +11,10 @@ import {Config} from './core/config.service';
 import {Api} from './core/api.service';
 import {AppConfig} from '../main';
 import {LocalStorage} from './core/local-storage.service';
+import {TestHelper} from '../test-helper.class';
 
 describe('AppComponent', () => {
-  let fixture, comp, call;
+  let fixture, comp, call, testHelper;
 
   beforeEach(async(() => {
     call = {};
@@ -43,6 +44,7 @@ describe('AppComponent', () => {
 
   beforeEach(() => {
     fixture = TestBed.createComponent(AppComponent);
+    testHelper = new TestHelper(fixture);
     comp = fixture.componentInstance;
   });
 
@@ -69,16 +71,19 @@ describe('AppComponent', () => {
   }));
 
   it('should show message', async(() => {
-    // TODO test showMessage
-    // comp.showMessage
+    const config = {life: 41};
+    comp.showMessage(config);
+    expect(comp.life).toBe(41);
+    expect(comp.messages).toEqual([{life: 41}]);
   }));
-
-  // TODO test template
 
   it('should remove subscription', async(() => {
-    comp.subscription = {unsubscribe: () => {}};
-    spyOn(comp.subscription, 'unsubscribe');
-    comp.ngOnDestroy();
-    expect(comp.subscription.unsubscribe).toHaveBeenCalled();
+    testHelper.destroyUnsubscribe();
   }));
+
+  it('template should have messages, header and router outlet', async(() => {
+    testHelper.existsByCss('app-header');
+    testHelper.existsByCss('router-outlet');
+    testHelper.existsByCss('p-growl');
+  }))
 });
