@@ -6,9 +6,9 @@ interface CompomentToTest {
   ngOnDestroy: () => {};
 }
 
-export class TestHelper<T extends CompomentToTest> {
+export class TestComponentHelper<T extends CompomentToTest> {
   comp: T;
-  constructor(private fixture: ComponentFixture<T>) {
+  constructor(private fixture?: ComponentFixture<T>) {
     this.comp = fixture.componentInstance
   }
 
@@ -19,5 +19,5 @@ export class TestHelper<T extends CompomentToTest> {
     spyOn(this.comp.subscription, 'unsubscribe');
     this.comp.ngOnDestroy();
     expect(this.comp.subscription.unsubscribe).toHaveBeenCalled();
-  }
+  };
 }

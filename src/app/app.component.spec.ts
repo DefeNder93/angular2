@@ -11,15 +11,14 @@ import {Config} from './core/config.service';
 import {Api} from './core/api.service';
 import {AppConfig} from '../main';
 import {LocalStorage} from './core/local-storage.service';
-import {TestHelper} from '../test-helper.class';
+import {TestComponentHelper} from '../helpers/test-component-helper.class';
 
 describe('AppComponent', () => {
-  let fixture, comp, call, testHelper;
+  let fixture, comp, testHelper;
 
   beforeEach(async(() => {
-    call = {};
     const authServiceMock = {
-      init: () => {call['authInit'] = true}
+      init: () => {}
     };
     TestBed.configureTestingModule({
       declarations: [
@@ -44,7 +43,7 @@ describe('AppComponent', () => {
 
   beforeEach(() => {
     fixture = TestBed.createComponent(AppComponent);
-    testHelper = new TestHelper(fixture);
+    testHelper = new TestComponentHelper(fixture);
     comp = fixture.componentInstance;
   });
 
