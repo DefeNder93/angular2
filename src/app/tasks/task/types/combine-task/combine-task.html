@@ -1,0 +1,17 @@
+<div class="ui-g">
+  <div class="ui-g-3" pDroppable="place" (onDrop)="dropToCards(place)">
+    <div *ngFor="let card of cards" class="lp-task-combine-item" pDraggable="card" (onDragStart)="dragCardStart(card)"
+         (onDragEnd)="dragCardEnd()">{{card?.name}}</div>
+  </div>
+  <div class="ui-g-3"></div>
+  <div class="ui-g-3">
+    <div *ngFor="let place of places" pDraggable="place" (onDragEnd)="dragPlaceEnd()" (onDragStart)="dragPlaceStart(place)"
+         class="lp-task-combine-item" pDroppable="card" (onDrop)="dropToPlace(place)">
+      {{place[1] ? place[1].name : '...'}}</div>
+  </div>
+  <div class="ui-g-3">
+    <div *ngFor="let place of places"
+         class="lp-task-combine-item">{{place[0]?.name}}</div>
+  </div>
+  <div class="ui-g-3"></div>
+</div>

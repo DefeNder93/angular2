@@ -1,6 +1,7 @@
 import {Component, ComponentFactoryResolver, ViewChild, AfterViewInit} from '@angular/core';
 import {DynamicTaskDirective} from './dynamic-task.directive';
 import {InsertTaskComponent} from './types/insert-task/insert-task';
+import {CombineTaskComponent} from './types/combine-task/combine-task';
 
 @Component({
   selector: 'app-task',
@@ -22,7 +23,7 @@ export class TaskComponent implements AfterViewInit {
   }
 
   loadComponent() {
-    const componentFactory = this.componentFactoryResolver.resolveComponentFactory(InsertTaskComponent);
+    const componentFactory = this.componentFactoryResolver.resolveComponentFactory(CombineTaskComponent);
     // let componentFactory = this._componentFactoryResolver.resolveComponentFactory(CombineTask);
     const viewContainerRef = this.dynamicTask.viewContainerRef;
     viewContainerRef.clear();

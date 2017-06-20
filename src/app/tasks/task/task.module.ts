@@ -4,6 +4,8 @@ import {CombineTaskComponent} from './types/combine-task/combine-task';
 import {InsertTaskComponent} from './types/insert-task/insert-task';
 import {DynamicTaskDirective} from './dynamic-task.directive';
 import {PasswordModule} from 'primeng/primeng';
+import {DragDropModule} from 'primeng/primeng';
+import {CommonModule} from '@angular/common';
 
 @NgModule({
   declarations: [
@@ -13,7 +15,9 @@ import {PasswordModule} from 'primeng/primeng';
     DynamicTaskDirective
   ],
   imports: [
-    PasswordModule
+    PasswordModule,
+    DragDropModule,
+    CommonModule
   ],
   entryComponents: [CombineTaskComponent, InsertTaskComponent],
 })
