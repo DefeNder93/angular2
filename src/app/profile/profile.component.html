@@ -1,14 +1,14 @@
 <form #profileForm="ngForm" name="profileForm" (ngSubmit)="profileForm.form.valid && save()" class="profile-form">
   <h3>Email:</h3>
-  <input #email="ngModel" pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$" id="email" type="text" size="30" name="email" pInputText
+  <input #email="ngModel" pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$" id="email" type="text" size="30" maxlength="30" name="email" pInputText
          [(ngModel)]="user.email"/>
   <div class="lp-form-error" [hidden]="email.valid || email.pristine">Email is invalid</div>
 
   <h3>First Name:</h3>
-  <input type="text" size="30" pInputText name="firstName" [(ngModel)]="user.firstName"/>
+  <input type="text" size="30" pInputText name="firstName" maxlength="30" [(ngModel)]="user.firstName"/>
 
   <h3>Last Name:</h3>
-  <input type="text" size="30" pInputText name="lastName" [(ngModel)]="user.lastName"/>
+  <input type="text" size="30" pInputText name="lastName" maxlength="30" [(ngModel)]="user.lastName"/>
 
   <p>
     <button type="submit" pButton label="Save"></button>
