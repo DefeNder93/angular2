@@ -1,15 +1,17 @@
-<div class="profile-form">
+<form #profileForm="ngForm" name="profileForm" (ngSubmit)="profileForm.form.valid && save()" class="profile-form">
   <h3>Email:</h3>
-  <input type="text" size="30" pInputText [(ngModel)]="user.email"/>
+  <input #email="ngModel" pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$" id="email" type="text" size="30" name="email" pInputText
+         [(ngModel)]="user.email"/>
+  <div class="lp-form-error" [hidden]="email.valid || email.pristine">Email is invalid</div>
 
   <h3>First Name:</h3>
-  <input type="text" size="30" pInputText [(ngModel)]="user.firstName"/>
+  <input type="text" size="30" pInputText name="firstName" [(ngModel)]="user.firstName"/>
 
   <h3>Last Name:</h3>
-  <input type="text" size="30" pInputText [(ngModel)]="user.lastName"/>
+  <input type="text" size="30" pInputText name="lastName" [(ngModel)]="user.lastName"/>
 
   <p>
-    <button (click)="save()" type="button" pButton label="Save"></button>
+    <button type="submit" pButton label="Save"></button>
   </p>
 
   <h3>Related Social Networks:</h3>
@@ -19,4 +21,4 @@
     <i (click)="addSocial('github')" [class.active]="user.socials.github" class="fa fa-github"></i>
     <i (click)="addSocial('google')" [class.active]="user.socials.google" class="fa fa-google-plus"></i>
   </p>
-</div>
+</form>
