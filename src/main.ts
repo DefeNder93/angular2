@@ -13,7 +13,7 @@ if (environment.production) {
 }
 
 function deferredBootstrap() {
-  initConfig().then(function () {
+  initConfig().subscribe(function () {
     platformBrowserDynamic().bootstrapModule(AppModule);
   });
 }
@@ -21,12 +21,14 @@ function initConfig() {
   const config: Config = new Config();
   const injector = ReflectiveInjector.resolveAndCreate([HTTP_PROVIDERS]);
   const http = injector.get(Http);
-  return http.get('assets/config.json')
-    .toPromise()
-    .then(r => {
-      config.init(r.json());
-      AppConfig.config = config;
-    }).catch(r => Logger.error('Bootstrap error', r));
+  const observable = http.get('assets/config.json')
+    .map(r => r.json())
+    .catch(r => Logger.error('Bootstrap error', r));
+  observable.subscribe(d => {
+    config.init(d);
+    AppConfig.config = config;
+  });
+  return observable;
 }
 deferredBootstrap();
 

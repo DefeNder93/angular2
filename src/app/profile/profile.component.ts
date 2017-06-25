@@ -20,8 +20,8 @@ export class ProfileComponent implements OnInit {
   };
 
   save = () => this.authService.saveUser(this.user)
-    .then(r => this.messagesService.showSuccess('User was successfully added', 'Social was added'))
-    .catch(r => this.messagesService.showServerError('User was not added'));
+    .subscribe(r => this.messagesService.showSuccess('User was successfully added', 'Social was added'),
+      e => this.messagesService.showServerError('User was not added'));
 
   addSocial = (provider: string) => this.authService.addSocial(provider).then(r => this.addSocialSuccess(provider));
 

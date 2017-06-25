@@ -19,14 +19,12 @@ export class AuthService {
   constructor(private config: Config, private api: Api, private messagesService: MessagesService, private localStorage: LocalStorage) {
   }
 
-  testAuth = () => {
-    return this.api.testAuth().then(r => console.log('secured auth: ' + r.text()))
-      .catch(r => this.messagesService.showError(r, 'Secured Auth Error'));
-  };
+  // testAuth = () => {
+  //   return this.api.testAuth().then(r => console.log('secured auth: ' + r.text()))
+  //     .catch(r => this.messagesService.showError(r, 'Secured Auth Error'));
+  // };
 
   getUser = () => this.user ? Observable.of(this.user) : this.api.getUser().map(u => this.user = u);
-
-  // test = () => Observable.of(this.user);
 
   saveUser = (user: User) => this.api.updateUser(user);
 
@@ -60,10 +58,10 @@ export class AuthService {
   login = (provider: string) => {
     return new Promise<string>((resolve, reject) => {
       hello(provider).login({force: true}).then(r => {
-        this.authHandler(r, provider).then(token => {
+        this.authHandler(r, provider).subscribe(token => {
           this.localStorage.set('auth', {token: token.text(), provider: provider});
           resolve();
-        }).catch(e => this.messagesService.rejectWithError(reject, e, 'Social Auth Error'));
+        }, e => this.messagesService.rejectWithError(reject, e, 'Social Auth Error'));
       }, e => {
         this.messagesService.rejectWithError(reject, e, 'HelloJS Auth Error');
       });
@@ -79,8 +77,8 @@ export class AuthService {
     }
     return new Promise<string>((resolve, reject) => {
       hello(provider).login({force: true}).then(r => {
-        this.addSocialHandler(r, provider, existingProvider, existingToken).then(s => resolve())
-          .catch(e => this.messagesService.rejectWithError(reject, r, 'Social Auth Error'));
+        this.addSocialHandler(r, provider, existingProvider, existingToken)
+          .subscribe(s => resolve(), e => this.messagesService.rejectWithError(reject, r, 'Social Auth Error'));
       }, r => this.messagesService.rejectWithError(reject, r, 'HelloJS Auth Error'));
     });
   };

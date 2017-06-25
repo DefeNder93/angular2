@@ -24,9 +24,4 @@ export class LoginComponent implements OnInit {
 
   login = (provider: string) => this.authService.login(provider)
     .then(r => this.changeDetectorRef.detectChanges());
-
-  testAuth() {
-    this.authService.testAuth();
-  }
-
 }
