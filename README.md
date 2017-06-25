@@ -1,6 +1,6 @@
 # Learn English
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.0.0.
+This project using [Angular CLI](https://github.com/angular/angular-cli) version 1.0.3.
 
 ###Setting up client config:
 
