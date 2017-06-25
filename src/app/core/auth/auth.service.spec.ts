@@ -21,8 +21,8 @@ describe('AuthService', () => {
   it('should get user from server (imitation)', (done: any) => {
     const user: User = new User();
     user.firstName = 'from server';
-    TestHelper.spyOnPromise(api, 'getUser', {json: () => user});
-    service.getUser().then(currentUser => {
+    TestHelper.spyOnSubscribe(api, 'getUser', user);
+    service.getUser().subscribe(currentUser => {
       expect(currentUser).toBe(user);
       done();
     });
@@ -33,9 +33,10 @@ describe('AuthService', () => {
     memoryUser.firstName = 'memory user';
     const serverUser: User = new User();
     serverUser.firstName = 'server user';
-    TestHelper.spyOnPromiseMultiple(api, 'getUser', [{json: () => memoryUser}, {json: () => serverUser}]);
-    service.getUser().then(r => // set first user to memory
-      service.getUser().then(r2 => { // should get user from memory, not from server
+    // memory user will be set to service.user on first call
+    TestHelper.spyOnSubscribeMultile(api, 'getUser', [memoryUser, serverUser]);
+    service.getUser().subscribe(r =>  // set first user to memory
+      service.getUser().subscribe(r2 => { // should get user from memory, not from server
         expect(r2).toBe(memoryUser);
         done();
       }));

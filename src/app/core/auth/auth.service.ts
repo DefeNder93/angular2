@@ -7,6 +7,7 @@ import {Config} from '../config.service';
 import {Api} from '../api.service';
 import {MessagesService} from '../messages.service';
 import {User} from './user.model';
+import {Observable} from 'rxjs/Rx';
 
 declare const hello: any;  // hello.js doesn't have updated typings file
 
@@ -23,7 +24,9 @@ export class AuthService {
       .catch(r => this.messagesService.showError(r, 'Secured Auth Error'));
   };
 
-  getUser = () => this.user ? Promise.resolve(this.user) : this.api.getUser().then(r => this.user = r.json());
+  getUser = () => this.user ? Observable.of(this.user) : this.api.getUser().map(u => this.user = u);
+
+  // test = () => Observable.of(this.user);
 
   saveUser = (user: User) => this.api.updateUser(user);
 
@@ -91,7 +94,7 @@ export class AuthService {
 
   init = () => {
     this.initHello(this.config.get('GOOGLE_CLIENT_ID'), this.config.get('FACEBOOK_CLIENT_ID'), this.config.get('GITHUB_CLIENT_ID'));
-    this.isLoggedIn() && this.api.getUser().then(r => this.user = r.json());
+    this.isLoggedIn() && this.getUser().subscribe(u => this.user = u);
   };
 
   private initHello = (googleId: string, facebookId: string, githubId: string) => {
