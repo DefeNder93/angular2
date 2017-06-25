@@ -1,33 +1,29 @@
-# Angular2
+# Learn English
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.0.0.
 
-## Development server
+###Setting up client config:
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+- Create file /src/assets/config.json
+- Add configuration params (see an example for details)
+- Example: {
+             "GOOGLE_CLIENT_ID": "YOUR_CLIENT_ID",
+             "FACEBOOK_CLIENT_ID": "YOUR_CLIENT_ID",
+             "GITHUB_CLIENT_ID": "YOUR_CLIENT_ID",
+             "HOST": "http://localhost:3000",
+             "LOCAL_STORAGE_PREFIX": "app_",
+             "OAUTH_PROXY": "https://auth-server.herokuapp.com/proxy" 
+           }
 
-## Code scaffolding
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive/pipe/service/class/module`.
+###Setting up server config:
 
-## Build
+- Create file /server/.env
+- Add configuration params (see an example)
+- Example of config file:
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `-prod` flag for a production build.
-
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
-Before running the tests make sure you are serving the app via `ng serve`.
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
-
-## Customizing
-
-- SCSS instead of CSS
-- Json-server for api mocks (run by "npm run json")
+PRIVATE_KEY = MY_PRIVATE_KEY
+DB_NAME = learn_english
+DB_PORT = 27017
+DB_HOST = localhost
+PORT = 3000
