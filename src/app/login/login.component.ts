@@ -23,5 +23,5 @@ export class LoginComponent implements OnInit {
   };
 
   login = (provider: string) => this.authService.login(provider)
-    .then(r => this.changeDetectorRef.detectChanges());
+    .subscribe(() => {}, () => {}, () => this.changeDetectorRef.detectChanges());
 }

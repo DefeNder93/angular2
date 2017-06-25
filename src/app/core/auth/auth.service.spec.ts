@@ -45,8 +45,8 @@ describe('AuthService', () => {
   it('should save user', (done: any) => {
     const user = new User();
     user.firstName = 'user for save';
-    TestHelper.spyOnPromise(api, 'updateUser', user);
-    service.saveUser(user).then(r => {
+    TestHelper.spyOnSubscribe(api, 'updateUser', user);
+    service.saveUser(user).subscribe(r => {
       expect(r).toBe(user);
       done();
     });

@@ -8,6 +8,7 @@ import {Api} from '../api.service';
 import {MessagesService} from '../messages.service';
 import {User} from './user.model';
 import {Observable} from 'rxjs/Rx';
+import {Subject} from 'rxjs/Rx';
 
 declare const hello: any;  // hello.js doesn't have updated typings file
 
@@ -56,16 +57,16 @@ export class AuthService {
   };
 
   login = (provider: string) => {
-    return new Promise<string>((resolve, reject) => {
-      hello(provider).login({force: true}).then(r => {
-        this.authHandler(r, provider).subscribe(token => {
-          this.localStorage.set('auth', {token: token.text(), provider: provider});
-          resolve();
-        }, e => this.messagesService.rejectWithError(reject, e, 'Social Auth Error'));
-      }, e => {
-        this.messagesService.rejectWithError(reject, e, 'HelloJS Auth Error');
-      });
+    const subject = new Subject();
+    hello(provider).login({force: true}).then(r => {
+      this.authHandler(r, provider).subscribe(token => {
+        this.localStorage.set('auth', {token: token.text(), provider: provider});
+        subject.complete();
+      }, e => this.messagesService.rejectWithError(subject.error, e, 'Social Auth Error'));
+    }, e => {
+      this.messagesService.rejectWithError(subject.error, e, 'HelloJS Auth Error');
     });
+    return subject;
   };
 
   addSocial = (provider: string) => {
@@ -75,12 +76,12 @@ export class AuthService {
     if (!this.checkParams(existingToken, existingProvider)) {
       return;
     }
-    return new Promise<string>((resolve, reject) => {
-      hello(provider).login({force: true}).then(r => {
-        this.addSocialHandler(r, provider, existingProvider, existingToken)
-          .subscribe(s => resolve(), e => this.messagesService.rejectWithError(reject, r, 'Social Auth Error'));
-      }, r => this.messagesService.rejectWithError(reject, r, 'HelloJS Auth Error'));
-    });
+    const subject = new Subject();
+    hello(provider).login({force: true}).then(r => {
+      this.addSocialHandler(r, provider, existingProvider, existingToken)
+        .subscribe(s => subject.complete(), e => this.messagesService.rejectWithError(subject.error, r, 'Social Auth Error'));
+    }, r => this.messagesService.rejectWithError(subject.error, r, 'HelloJS Auth Error'));
+    return subject;
   };
 
   private checkParams = (existingToken, existingProvider) => {

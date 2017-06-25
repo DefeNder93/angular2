@@ -14,7 +14,7 @@ export class Api {
 
   authSocial = (data) => this.http.post(this.host + '/auth/social', data);
 
-  addSocial = (data) => this.http.post(this.host + '/auth/add-social', data).map(this.extractData);
+  addSocial = (data) => this.http.post(this.host + '/auth/add-social', data);
 
   getUser = () => this.http.get(this.host + '/auth/user').map(this.extractData);
 
