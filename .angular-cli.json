@@ -3,6 +3,10 @@
   "project": {
     "name": "angular2"
   },
+  "dependencies": {
+    "primeng": "^4.1.0-rc.2",
+    "font-awesome": "^4.7.0"
+  },
   "apps": [
     {
       "root": "src",
