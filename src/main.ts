@@ -13,7 +13,8 @@ if (environment.production) {
 }
 
 function deferredBootstrap() {
-  initConfig().subscribe(function () {
+  // TODO check why unit test doesn't work with subscribe
+  initConfig().toPromise().then(function () {
     platformBrowserDynamic().bootstrapModule(AppModule);
   });
 }
