@@ -14,7 +14,7 @@ if (environment.production) {
 
 const deferredBootstrap = () => {
   initConfig().first().subscribe(() => platformBrowserDynamic().bootstrapModule(AppModule));
-}; // .unsubscribe();
+};
 
 function initConfig() {
   const config: Config = new Config();

@@ -28,7 +28,6 @@ export class ProfileComponent implements OnInit {
   private addSocialSuccess(provider) {
     this.messagesService.showSuccess('Social network ' + provider + ' was successfully added', 'Social was added', 5000);
     this.user['socials'][provider] = true;
-    this.changeDetectorRef.detectChanges();  // TODO check whu not working
   }
 
 }
