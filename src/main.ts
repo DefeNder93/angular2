@@ -12,7 +12,9 @@ if (environment.production) {
   enableProdMode();
 }
 
-const deferredBootstrap = () => initConfig().subscribe(() => platformBrowserDynamic().bootstrapModule(AppModule)).unsubscribe();
+const deferredBootstrap = () => {
+  initConfig().first().subscribe(() => platformBrowserDynamic().bootstrapModule(AppModule));
+}; // .unsubscribe();
 
 function initConfig() {
   const config: Config = new Config();
