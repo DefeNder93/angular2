@@ -12,12 +12,8 @@ if (environment.production) {
   enableProdMode();
 }
 
-function deferredBootstrap() {
-  // TODO check why unit test doesn't work with subscribe
-  initConfig().toPromise().then(function () {
-    platformBrowserDynamic().bootstrapModule(AppModule);
-  });
-}
+const deferredBootstrap = () => initConfig().subscribe(() => platformBrowserDynamic().bootstrapModule(AppModule)).unsubscribe();
+
 function initConfig() {
   const config: Config = new Config();
   const injector = ReflectiveInjector.resolveAndCreate([HTTP_PROVIDERS]);
