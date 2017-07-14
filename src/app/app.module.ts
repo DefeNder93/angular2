@@ -15,13 +15,15 @@ import {ProfileComponent} from './profile/profile.component';
 import {InputTextModule} from 'primeng/primeng';
 import {AppComponent} from './app.component';
 import {CoreModule} from './core/core.module';
+import {TasksComponent} from './tasks/tasks.component';
 
 @NgModule({
   declarations: [
     LoginComponent,
     AppComponent,
     HeaderComponent,
-    ProfileComponent
+    ProfileComponent,
+    TasksComponent
   ],
   imports: [
     BrowserModule,

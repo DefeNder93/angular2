@@ -29,21 +29,13 @@ export class CombineTaskComponent implements OnInit, ITask {
     place.push(this.currentCard);
   };
 
-  dragCardStart = (card) => {
-    this.currentCard = card
-  };
+  dragCardStart = (card) => this.currentCard = card;
 
-  dragCardEnd = () => {
-    this.currentCard = null
-  };
+  dragCardEnd = () => this.currentCard = null;
 
-  dragPlaceStart = (place) => {
-    this.currentPlace = place
-  };
+  dragPlaceStart = (place) => this.currentPlace = place;
 
-  dragPlaceEnd = () => {
-    this.currentPlace = null
-  };
+  dragPlaceEnd = () => this.currentPlace = null;
 
   dropToCards = () => {
     this.cards.push(this.currentPlace[1]);

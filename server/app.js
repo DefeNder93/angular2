@@ -8,6 +8,7 @@ let bodyParser = require('body-parser');
 require('dotenv').config();
 let user = require('./controllers/user');
 let auth = require('./controllers/auth');
+let task = require('./controllers/task');
 let passport = require('passport');
 let cors = require('cors');
 
@@ -35,6 +36,7 @@ app.use(function(req, res, next) {
 
 app.use('/user', user);
 app.use('/auth', auth);
+app.use('/task', task);
 
 let port = process.env.PORT || 3000;
 app.listen(port, function () {

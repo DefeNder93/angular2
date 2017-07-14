@@ -18,6 +18,8 @@ export class Api {
 
   getUser = () => this.http.get(this.host + '/auth/user').map(this.extractData);
 
+  getTasks = () => this.http.get(this.host + '/task').map(this.extractData);
+
   private extractData = (res) => res.json() || null;
 
   updateUser = (user: User) => this.http.put(this.host + '/auth/user', user).map(this.extractData);

@@ -1,3 +1,5 @@
 export class Task {
-  templateName: string;
+  _id: number;
+  name: string;
+  type: string;
 }
