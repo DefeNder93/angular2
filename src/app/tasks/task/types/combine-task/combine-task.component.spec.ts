@@ -1,8 +1,14 @@
-import {TestBed, async} from '@angular/core/testing';
+import {TestBed, async, inject, fakeAsync, tick} from '@angular/core/testing';
 import {CombineTaskComponent} from './combine-task.component';
 import {TestComponentHelper} from '../../../../../helpers/test-component-helper.class';
 import {CombineCard} from './combine-card.model';
-import {iit} from 'selenium-webdriver/testing';
+import {ActivatedRouteStub} from '../../../../../helpers/router-stubs';
+import {Api} from '../../../../core/api.service';
+import {HttpModule} from '@angular/http';
+import {RouterTestingModule} from '@angular/router/testing';
+import {Config} from '../../../../core/config.service';
+import {AppConfig} from '../../../../../main';
+import {ActivatedRoute} from '@angular/router';
 
 
 describe('CombineTask', () => {
@@ -13,8 +19,15 @@ describe('CombineTask', () => {
       declarations: [
         CombineTaskComponent
       ],
-      providers: [],
-      imports: []
+      providers: [
+        ActivatedRouteStub,
+        Api,
+        {provide: Config, useFactory: () => AppConfig.config}
+      ],
+      imports: [
+        HttpModule,
+        RouterTestingModule
+      ]
     }).compileComponents();
   }));
 
@@ -83,9 +96,17 @@ describe('CombineTask', () => {
     expect(comp.places).toEqual([[card3], [card4]]);
   });
 
-  it('should get current task by param id', function(){
-    // TODO
-  });
+  it('should get current task by param id', async(() => {
+    // TODO fix
+    const api = fixture.debugElement.injector.get(Api);
+    const activatedRoute = fixture.debugElement.injector.get(ActivatedRoute);
+    spyOn(api, 'getTask');
+    activatedRoute.testParamMap = {id: '112233'};
+    comp.getTask();
+    fixture.whenStable().then(() => {
+      expect(api.getTask).toHaveBeenCalledWith('112233');
+    });
+  }));
 
   it('the component should have init function', function(){
     // TODO
