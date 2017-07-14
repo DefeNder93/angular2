@@ -1,5 +1,5 @@
 import {TestBed, async} from '@angular/core/testing';
-import {CombineTaskComponent} from './combine-task';
+import {CombineTaskComponent} from './combine-task.component';
 import {TestComponentHelper} from '../../../../../helpers/test-component-helper.class';
 import {CombineCard} from './combine-card.model';
 import {iit} from 'selenium-webdriver/testing';
@@ -81,6 +81,14 @@ describe('CombineTask', () => {
     comp.dropToCards();
     expect(comp.cards).toEqual([card1, card2]);
     expect(comp.places).toEqual([[card3], [card4]]);
+  });
+
+  it('should get current task by param id', function(){
+    // TODO
+  });
+
+  it('the component should have init function', function(){
+    // TODO
   });
 
 });

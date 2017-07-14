@@ -1,7 +1,7 @@
 import {Component, ComponentFactoryResolver, ViewChild, AfterContentInit} from '@angular/core';
 import {DynamicTaskDirective} from './dynamic-task.directive';
-import {InsertTaskComponent} from './types/insert-task/insert-task';
-import {CombineTaskComponent} from './types/combine-task/combine-task';
+import {CombineTaskComponent} from './types/combine-task/combine-task.component';
+import {Task} from '../../models/task.model'
 
 @Component({
   selector: 'app-task',
@@ -9,7 +9,7 @@ import {CombineTaskComponent} from './types/combine-task/combine-task';
   <ng-template appDynamicTask></ng-template>`,
   styleUrls: ['task.component.scss']
 })
-export class TaskComponent implements AfterContentInit{
+export class TaskComponent implements AfterContentInit {
 
   // doc https://angular.io/docs/ts/latest/cookbook/dynamic-component-loader.html
   @ViewChild(DynamicTaskDirective) dynamicTask: DynamicTaskDirective;
