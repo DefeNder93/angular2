@@ -28,6 +28,14 @@ DB_PORT = 27017
 DB_HOST = localhost
 PORT = 3000
 
+### Create database
+
+- Install mongodb locally and create a database. For example "learn_english"
+- Create 2 empty collections - "user" and "task"
+
+### Auth
+- Applicaitons should be created on Facebook, Google and Github. Hosts should be allowed
+
 ## MIT License
 
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
